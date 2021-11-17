@@ -9,6 +9,9 @@ public class GameObject
     }
     public void Draw()
     {
-        Raylib.DrawTextureRec(texture, rect, new Vector2(rect.x, rect.y), Color.WHITE);
+        // BAD ???
+        // Raylib.DrawRectangle((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height, Color.BROWN);
+        Raylib.DrawRectangleRec(rect, Color.GOLD);
+        Raylib.DrawTextureEx(texture, new Vector2(rect.x, rect.y), 0, rect.width / texture.width, Color.WHITE);
     }
 }

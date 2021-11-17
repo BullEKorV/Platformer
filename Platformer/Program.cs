@@ -11,8 +11,10 @@ class Program
 
         new Animation(@"player\run");
 
+        new Player();
 
-        Console.WriteLine(Animation.allAnimations[@"player\idle"].frames.Count);
+
+        // Console.WriteLine(Animation.allAnimations[@"player\idle"].frames.Count);
 
         while (!Raylib.WindowShouldClose())
         {

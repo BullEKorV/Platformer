@@ -17,7 +17,12 @@ class Program
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.WHITE);
 
+            foreach (GameObject obj in GameObject.gameObjects)
+            {
+                obj.Draw();
+            }
             Raylib.EndDrawing();
         }
     }

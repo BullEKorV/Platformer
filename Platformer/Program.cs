@@ -7,12 +7,13 @@ class Program
         Raylib.InitWindow(1000, 800, "Platformer");
         Raylib.SetTargetFPS(120);
 
-        new Animation(@"player\idle");
+        // new Animation(@"player\idle");
 
-        new Animation(@"player\run");
+        // new Animation(@"player\run");
 
         new Player();
 
+        Animation.GetSubDirectories();
 
         // Console.WriteLine(Animation.allAnimations[@"player\idle"].frames.Count);
 

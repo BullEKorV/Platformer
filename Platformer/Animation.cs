@@ -7,7 +7,7 @@ public class Animation
     int framesPerFrame = 4;
     public Animation(string name)
     {
-        string[] fileArray = Directory.GetFiles(@"textures\" + name);
+        string[] fileArray = Directory.GetFiles(@"animations\" + name);
 
         for (var i = 0; i < fileArray.Length; i++)
         {
@@ -18,6 +18,30 @@ public class Animation
 
         allAnimations.Add(name, this);
     }
+    public static void GetSubDirectories()
+    {
+        string temp = @"animations\";
+
+        string[] subdirectoryEntries = Directory.GetDirectories(temp);
+        foreach (string subdirectory in subdirectoryEntries)
+        {
+            Console.WriteLine("Directory found");
+            LoadSubDirs(subdirectory);
+        }
+    }
+    private static void LoadSubDirs(string dir)
+    {
+        Console.WriteLine(dir);
+
+        string[] subdirectoryEntries = Directory.GetDirectories(dir);
+
+        foreach (string subdirectory in subdirectoryEntries)
+
+        {
+            LoadSubDirs(subdirectory);
+        }
+    }
+
     public Texture2D GetCurrentFrame()
     {
         return frames[currentFrame / framesPerFrame];

@@ -24,6 +24,12 @@ public class Player : Entity
 
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE)) velocity.Y = 125;
 
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (gameObject.GetType() == typeof(Enemy))
+                CheckEnemyCollision(gameObject.rect);
+        }
+
 
         if (Math.Abs(velocity.X) > 4)
         {
@@ -33,5 +39,11 @@ public class Player : Entity
         {
             animation = Animation.allAnimations["player-idle"];
         }
+    }
+    void CheckEnemyCollision(Rectangle enemy)
+    {
+        bool isOverlapping = Raylib.CheckCollisionRecs(rect, enemy);
+
+
     }
 }

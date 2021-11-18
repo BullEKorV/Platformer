@@ -17,6 +17,8 @@ class Program
         new Tile(new Vector2(160, 0));
         new Tile(new Vector2(240, 0));
         new Tile(new Vector2(240, 80));
+        new Tile(new Vector2(160, 320));
+
 
 
         while (!Raylib.WindowShouldClose())

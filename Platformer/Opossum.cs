@@ -1,4 +1,4 @@
-public class Opussom : Entity
+public class Opussom : Enemy
 {
     public Opussom() : base()
     {
@@ -10,5 +10,9 @@ public class Opussom : Entity
         // Match texture cord with hitbox
 
         textureOffset = new Vector2(-10, 50);
+    }
+    public override void Update()
+    {
+        base.Update();
     }
 }

@@ -14,9 +14,7 @@ public class Animation
             frames.Add(Raylib.LoadTexture(fileArray[i]));
         }
 
-
-        this.totalFrames = frames.Count * framesPerFrame;
-        // Console.WriteLine(totalFrames);
+        totalFrames = frames.Count * framesPerFrame;
 
         string name = dir.Replace(@"animations\", "");
         // Console.WriteLine(name);
@@ -35,14 +33,16 @@ public class Animation
     }
     public Texture2D GetCurrentFrame()
     {
+        // Console.WriteLine("frame: " + currentFrame / framesPerFrame);
         return frames[currentFrame / framesPerFrame];
     }
     public void Update()
     {
         currentFrame++;
-        Console.WriteLine(currentFrame);
-        Console.WriteLine(totalFrames * framesPerFrame);
-        if (currentFrame == totalFrames / framesPerFrame)
+        // Console.WriteLine("total: " + totalFrames);
+        // Console.WriteLine("current:" + currentFrame);
+        // Console.WriteLine("total time:" + totalFrames * framesPerFrame);
+        if (currentFrame * framesPerFrame >= totalFrames * framesPerFrame)
         {
             currentFrame = 0;
         }

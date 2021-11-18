@@ -11,7 +11,13 @@ class Program
         Tile.LoadTilesFromDirectory();
 
         new Player();
-        new Opussom();
+        // new Opussom();
+        new Tile(new Vector2(0, 80));
+        new Tile(new Vector2(80, 0));
+        new Tile(new Vector2(160, 0));
+        new Tile(new Vector2(240, 0));
+        new Tile(new Vector2(240, 80));
+
 
         while (!Raylib.WindowShouldClose())
         {

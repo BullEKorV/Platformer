@@ -3,15 +3,13 @@ public class Tile : GameObject
 {
     public static Dictionary<string, Texture2D> allTiles = new Dictionary<string, Texture2D>();
 
-    public Tile()
+    public Tile(Vector2 pos)
     {
         texture = allTiles["grass"];
 
         // Define tile hitbox
-        Vector2 hitboxSize = new Vector2(128, 128);
-        rect = new Rectangle(100, 100, hitboxSize.X, hitboxSize.Y);
-        // Match texture cord with hitbox
-        textureOffset = new Vector2(0, 0);
+        Vector2 hitboxSize = new Vector2(80, 80);
+        rect = new Rectangle(pos.X, pos.Y, hitboxSize.X, hitboxSize.Y);
     }
     public static void LoadTilesFromDirectory()
     {

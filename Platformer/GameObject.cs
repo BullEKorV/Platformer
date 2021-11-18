@@ -1,7 +1,7 @@
 public class GameObject
 {
     public static List<GameObject> gameObjects = new List<GameObject>();
-    protected Rectangle rect;
+    public Rectangle rect;
     protected Texture2D texture;
     protected Vector2 textureOffset;
     public GameObject()
@@ -23,7 +23,6 @@ public class GameObject
         Raylib.DrawTextureEx(texture, new Vector2(newRect.x + textureOffset.X, newRect.y - textureOffset.Y), 0, worldScale, Color.WHITE);
         // Console.WriteLine(rect.width / texture.width);
     }
-    // https://www.mathsisfun.com/algebra/matrix-transform.html
     public Rectangle FlipYAxis(Rectangle rect)
     {
         Rectangle oldRectangle = rect;

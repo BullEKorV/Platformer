@@ -7,18 +7,19 @@ class Program
         Raylib.InitWindow(1000, 800, "Platformer");
         Raylib.SetTargetFPS(120);
 
-        // new Animation(@"player\idle");
-
-        // new Animation(@"player\run");
+        Animation.LoadAllAnimations();
 
         new Player();
-
-        Animation.LoadAllAnimations();
 
         // Console.WriteLine(Animation.allAnimations[@"player\idle"].frames.Count);
 
         while (!Raylib.WindowShouldClose())
         {
+            foreach (GameObject obj in GameObject.gameObjects)
+            {
+                obj.Update();
+            }
+
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
 

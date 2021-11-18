@@ -7,6 +7,10 @@ public class GameObject
     {
         gameObjects.Add(this);
     }
+    public virtual void Update()
+    {
+
+    }
     public void Draw()
     {
         // BAD ???

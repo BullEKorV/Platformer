@@ -5,43 +5,32 @@ public class Animation
     int currentFrame = 0;
     int totalFrames;
     int framesPerFrame = 4;
-    public Animation(string name)
+    public Animation(string dir)
     {
-        string[] fileArray = Directory.GetFiles(@"animations\" + name);
+        string[] fileArray = Directory.GetFiles(dir);
 
         for (var i = 0; i < fileArray.Length; i++)
         {
-            // Console.WriteLine(fileArray[i]);
             frames.Add(Raylib.LoadTexture(fileArray[i]));
         }
         totalFrames = frames.Count * framesPerFrame;
 
+
+        string name = dir.Replace(@"animations\", "");
+        // Console.WriteLine(name);
+
         allAnimations.Add(name, this);
     }
-    public static void GetSubDirectories()
+    public static void LoadAllAnimations()
     {
-        string temp = @"animations\";
+        string root = @"animations\";
 
-        string[] subdirectoryEntries = Directory.GetDirectories(temp);
-        foreach (string subdirectory in subdirectoryEntries)
+        string[] animations = Directory.GetDirectories(root);
+        foreach (string animation in animations)
         {
-            Console.WriteLine("Directory found");
-            LoadSubDirs(subdirectory);
+            new Animation(animation);
         }
     }
-    private static void LoadSubDirs(string dir)
-    {
-        Console.WriteLine(dir);
-
-        string[] subdirectoryEntries = Directory.GetDirectories(dir);
-
-        foreach (string subdirectory in subdirectoryEntries)
-
-        {
-            LoadSubDirs(subdirectory);
-        }
-    }
-
     public Texture2D GetCurrentFrame()
     {
         return frames[currentFrame / framesPerFrame];

@@ -13,7 +13,7 @@ class Program
 
         new Player();
 
-        Animation.GetSubDirectories();
+        Animation.LoadAllAnimations();
 
         // Console.WriteLine(Animation.allAnimations[@"player\idle"].frames.Count);
 

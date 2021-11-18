@@ -8,7 +8,11 @@ public class Player : Entity
 
         animation = Animation.allAnimations["player-idle"];
 
-        rect = new Rectangle(200, 200, 330, 320);
+        // Define player hitbox
+        Vector2 hitboxSize = new Vector2(90, 105);
+        rect = new Rectangle(50, 50, hitboxSize.X, hitboxSize.Y);
+        // Match texture cord with hitbox
+        textureOffset = new Vector2(-30, 55);
     }
     public override void Update()
     {

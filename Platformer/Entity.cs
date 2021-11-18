@@ -7,7 +7,6 @@ public class Entity : GameObject
 
     public Entity() : base()
     {
-
     }
     public override void Update()
     {

@@ -21,7 +21,7 @@ public class Animation
 
         allAnimations.Add(name, this);
     }
-    public static void LoadAllAnimations()
+    public static void LoadAnimationsFromDirectories()
     {
         string root = @"animations\";
 

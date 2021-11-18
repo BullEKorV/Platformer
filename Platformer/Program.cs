@@ -7,11 +7,11 @@ class Program
         Raylib.InitWindow(1000, 800, "Platformer");
         Raylib.SetTargetFPS(120);
 
-        Animation.LoadAllAnimations();
+        Animation.LoadAnimationsFromDirectories();
+        Tile.LoadTilesFromDirectory();
 
         new Player();
-
-        // Console.WriteLine(Animation.allAnimations[@"player\idle"].frames.Count);
+        new Opussom();
 
         while (!Raylib.WindowShouldClose())
         {
@@ -27,6 +27,7 @@ class Program
             {
                 obj.Draw();
             }
+
             Raylib.EndDrawing();
         }
     }

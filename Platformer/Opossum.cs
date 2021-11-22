@@ -9,7 +9,12 @@ public class Opussom : Enemy
         rect = new Rectangle(200, 200, hitboxSize.X, hitboxSize.Y);
         // Match texture cord with hitbox
 
-        textureOffset = new Vector2(-10, 50);
+        xOffsetDiff = 15;
+        xOffsetBase = -25;
+        yOffset = 50;
+        int xOffset = -25 + (lookingRight ? -xOffsetDiff : xOffsetDiff);
+
+        textureOffset = new Vector2(xOffset, yOffset);
     }
     public override void Update()
     {

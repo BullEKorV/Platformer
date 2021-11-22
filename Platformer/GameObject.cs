@@ -21,14 +21,14 @@ public class GameObject
         Rectangle player = gameObjects[0].rect;
 
         // Follow player
-        Vector2 cameraPosition = new Vector2(-player.x + Raylib.GetScreenWidth() / 2, player.y - Raylib.GetScreenWidth() / 4);
+        Vector2 cameraPosition = new Vector2(-player.x + Raylib.GetScreenWidth() / 2 - player.width / 2, player.y - Raylib.GetScreenWidth() / 4);
 
         cameraPosition = new Vector2(0, 0); // Temporarily disable player follow
 
         // BAD ???
-        Raylib.DrawRectangleRec(new Rectangle(newRect.x + cameraPosition.X, newRect.y + cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
+        Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)cameraPosition.X, newRect.y + (int)cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
 
-        DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + cameraPosition.X, newRect.y - textureOffset.Y + cameraPosition.Y), worldScale, lookingRight);
+        DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)cameraPosition.X, newRect.y - textureOffset.Y + (int)cameraPosition.Y), worldScale, lookingRight);
 
 
         // Raylib.DrawTextureEx(texture, new Vector2(newRect.x + textureOffset.X + cameraPosition.X, newRect.y - textureOffset.Y + cameraPosition.Y), 0, worldScale, Color.WHITE);

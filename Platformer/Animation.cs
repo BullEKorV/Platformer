@@ -2,7 +2,6 @@ public class Animation
 {
     public static Dictionary<string, Animation> allAnimations = new Dictionary<string, Animation>();
     public List<Texture2D> frames = new List<Texture2D>();
-    int currentFrame = 0;
     int totalFrames;
     int framesPerFrame = 16;
     public Animation(string dir)
@@ -31,12 +30,13 @@ public class Animation
             new Animation(animation);
         }
     }
-    public Texture2D GetCurrentFrame()
+    public Texture2D GetCurrentFrame(int currentFrame)
     {
         // Console.WriteLine("frame: " + currentFrame / framesPerFrame);
         return frames[currentFrame / framesPerFrame];
     }
-    public void Update()
+
+    public int AdvanceFrame(int currentFrame)
     {
         currentFrame++;
         // Console.WriteLine("total: " + totalFrames);
@@ -46,5 +46,10 @@ public class Animation
         {
             currentFrame = 0;
         }
+        return currentFrame;
+    }
+
+    public void Update()
+    {
     }
 }

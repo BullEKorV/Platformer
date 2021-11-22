@@ -5,19 +5,21 @@ public class Entity : GameObject
     protected Vector2 velocity;
     protected int speed;
     protected bool touchingGround;
+    protected int currentFrame = 0;
     public Entity() : base()
     {
+
     }
     public override void Update()
     {
         base.Update();
 
-        velocity.Y--;
+        velocity.Y -= 5f;
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
         {
-            if (gameobject.GetType() == typeof(Tile))
+            if (gameobject is Tile)
                 CheckCollision(gameobject.rect);
         }
 
@@ -26,10 +28,10 @@ public class Entity : GameObject
         rect.y += velocity.Y * Raylib.GetFrameTime();
 
         // Animation stuff
-        animation.Update();
-        texture = animation.GetCurrentFrame();
+        currentFrame = animation.AdvanceFrame(currentFrame);
+        texture = animation.GetCurrentFrame(currentFrame);
     }
-    void CheckCollision(Rectangle tile)
+    protected void CheckCollision(Rectangle tile)
     {
         // Console.WriteLine($"entity: {rect.x} {rect.y} tile: {tile.x} {tile.y}");
         if (rect.x <= tile.x + tile.width && rect.x > tile.x && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)

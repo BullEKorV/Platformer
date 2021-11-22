@@ -2,11 +2,15 @@ Fix slowdown on side of block when falling and pressed against
 
 Skumma röda squiggly lines längst ned på tiles
 
-Fix mirroring entity // DONE
+Polymorfi för checkcollission
 
 Fix jumping and smoother movement
 
+The longer you hold space the higher you jump
+
 Cherry give health
+
+When 2 are using the same animation it's sped up
 
 Gem give score
 
@@ -18,3 +22,5 @@ Fix collision with enemies
 Enemy AI
 
 Level maker
+
+Fix mirroring entity // DONE kinda Unless :EYES:

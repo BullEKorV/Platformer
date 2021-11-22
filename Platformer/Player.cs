@@ -1,6 +1,6 @@
 public class Player : Entity
 {
-
+    int jumpForce = 480;
     public Player() : base()
     {
         speed = 40;
@@ -31,13 +31,17 @@ public class Player : Entity
 
         velocity.X *= 0.8f;
 
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE)) velocity.Y = 125;
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && touchingGround)
+        {
+            velocity.Y = jumpForce;
+            touchingGround = false;
+        }
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)
         {
-            if (gameObject.GetType() == typeof(Enemy))
-                CheckEnemyCollision(gameObject.rect);
+            if (gameObject is Enemy)
+                CheckEnemyCollision((Enemy)gameObject);
         }
 
 
@@ -57,10 +61,22 @@ public class Player : Entity
 
 
     }
-    void CheckEnemyCollision(Rectangle enemy)
+    void CheckEnemyCollision(Enemy enemy)
     {
-        bool isOverlapping = Raylib.CheckCollisionRecs(rect, enemy);
+        int extraDepth = 10;
 
+        bool isOverlapping = Raylib.CheckCollisionRecs(rect, enemy.rect);
 
+        if (isOverlapping)
+        {
+            if (rect.y + velocity.Y * Raylib.GetFrameTime() >= enemy.rect.y + enemy.rect.height - extraDepth)
+            {
+                enemy.Die();
+            }
+            else
+            {
+                Raylib.DrawRectangle(0, 0, 100, 100, Color.BLUE);
+            }
+        }
     }
 }

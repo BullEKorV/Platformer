@@ -18,7 +18,7 @@ public class GameObject
         int worldScale = 5;
         Rectangle newRect = FlipYAxis(rect);
 
-        Rectangle player = gameObjects[0].rect;
+        Rectangle player = gameObjects.Find(x => (x is Player)).rect;
 
         // Follow player
         Vector2 cameraPosition = new Vector2(-player.x + Raylib.GetScreenWidth() / 2 - player.width / 2, player.y - Raylib.GetScreenWidth() / 4);

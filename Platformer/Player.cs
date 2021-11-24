@@ -1,10 +1,12 @@
 public class Player : Entity
 {
+    protected int hp;
     int jumpForce = 480;
+    public float invisibilityTimer = 0;
     public Player() : base()
     {
         speed = 40;
-        hp = 100;
+        hp = 3;
 
         animation = Animation.allAnimations["player-idle"];
 
@@ -17,6 +19,9 @@ public class Player : Entity
     public override void Update()
     {
         base.Update();
+
+        invisibilityTimer -= Raylib.GetFrameTime();
+        invisibilityTimer = Math.Max(0, invisibilityTimer);
 
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
         {
@@ -69,14 +74,20 @@ public class Player : Entity
 
         if (isOverlapping)
         {
-            if (rect.y + velocity.Y * Raylib.GetFrameTime() >= enemy.rect.y + enemy.rect.height - extraDepth)
+            if (rect.y + velocity.Y * Raylib.GetFrameTime() >= enemy.rect.y + enemy.rect.height - extraDepth && velocity.Y < 0) // If you come from above enemy dies
             {
+                velocity.Y = 300;
                 enemy.Die();
             }
-            else
+            else if (invisibilityTimer == 0) // Player take damage
             {
-                Raylib.DrawRectangle(0, 0, 100, 100, Color.BLUE);
+                DamageTaken();
             }
         }
+    }
+    void DamageTaken()
+    {
+        hp--;
+        invisibilityTimer = 3;
     }
 }

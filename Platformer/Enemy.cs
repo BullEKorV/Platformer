@@ -24,5 +24,6 @@ public class Enemy : Entity
     {
         // gameObjects.Remove(this);
         Raylib.DrawRectangle(0, 0, 100, 150, Color.RED);
+        isAlive = false;
     }
 }

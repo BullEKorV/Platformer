@@ -1,14 +1,13 @@
 public class Entity : GameObject
 {
+    public bool isAlive = true;
     protected Animation animation;
-    protected int hp;
     protected Vector2 velocity;
     protected int speed;
     protected bool touchingGround;
     protected int currentFrame = 0;
     public Entity() : base()
     {
-
     }
     public override void Update()
     {
@@ -31,6 +30,7 @@ public class Entity : GameObject
         currentFrame = animation.AdvanceFrame(currentFrame);
         texture = animation.GetCurrentFrame(currentFrame);
     }
+
     protected void CheckCollision(Rectangle tile)
     {
         // Console.WriteLine($"entity: {rect.x} {rect.y} tile: {tile.x} {tile.y}");
@@ -38,7 +38,7 @@ public class Entity : GameObject
         {
             // Console.WriteLine("left");
             rect.x = tile.x + tile.width;
-            velocity.X = +1;
+            velocity.X = 1;
         }
         if (rect.x + rect.width >= tile.x && rect.x + rect.width < tile.x + tile.width && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)
         {
@@ -50,14 +50,13 @@ public class Entity : GameObject
         {
             // Console.WriteLine("down");
             touchingGround = true;
-            // jumping = false;
             rect.y = tile.y + tile.height;
             velocity.Y = 0;
         }
+        else if (velocity.Y < 0) touchingGround = false; // Disable jump ability if falling
         if (rect.y + rect.height + velocity.Y * Raylib.GetFrameTime() >= tile.y && rect.y + rect.height < tile.y + tile.height && rect.x + rect.width > tile.x && rect.x < tile.x + tile.width)
         {
             // Console.WriteLine("up");
-            // jumping = false;
             rect.y = tile.y - rect.height;
             velocity.Y = 0;
         }

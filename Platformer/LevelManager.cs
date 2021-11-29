@@ -9,7 +9,7 @@ public class LevelManager
         ClearLevel();
         Level lvl = GetLevelsJson().Find(x => x.level == currentLevel);
 
-        // Load tiles and enemies to gameobjects-glo
+        // Load tiles and enemies to gameobjects
         foreach (JsonGameobject tile in lvl.tiles)
         {
             new Tile(new Vector2(tile.x, tile.y), tile.type);

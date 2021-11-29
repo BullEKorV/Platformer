@@ -1,12 +1,14 @@
-public class Opussom : Enemy
+public class Opossum : Enemy
 {
-    public Opussom() : base()
+    public Opossum(Vector2 pos) : base()
     {
         animation = Animation.allAnimations["opossum"];
 
+        pos *= 80;
+
         // Define player hitbox
         Vector2 hitboxSize = new Vector2(130, 90);
-        rect = new Rectangle(200, 200, hitboxSize.X, hitboxSize.Y);
+        rect = new Rectangle(pos.X, pos.Y, hitboxSize.X, hitboxSize.Y);
         // Match texture cord with hitbox
 
         xOffsetDiff = 15;

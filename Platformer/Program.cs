@@ -9,17 +9,9 @@ class Program
 
         Animation.LoadAnimationsFromDirectories();
         Tile.LoadTilesFromDirectory();
+        LevelManager.LoadLevel();
 
         new Player();
-        new Opussom();
-        new Tile(new Vector2(0, 80));
-        new Tile(new Vector2(80, 0));
-        new Tile(new Vector2(160, 0));
-        new Tile(new Vector2(240, 0));
-        new Tile(new Vector2(240, 80));
-        // new Tile(new Vector2(160, 320));
-
-
 
         while (!Raylib.WindowShouldClose())
         {

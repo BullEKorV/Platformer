@@ -1,25 +1,25 @@
 
 public class Tile : GameObject
 {
-    public static Dictionary<string, Texture2D> allTiles = new Dictionary<string, Texture2D>();
-
-    public Tile(Vector2 pos)
+    public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+    public Tile(Vector2 gridPos, string name)
     {
-        texture = allTiles["grass"];
+        texture = textures[name];
+
+        Vector2 worldPos = gridPos * 80;
 
         // Define tile hitbox
         Vector2 hitboxSize = new Vector2(80, 80);
-        rect = new Rectangle(pos.X, pos.Y, hitboxSize.X, hitboxSize.Y);
+        rect = new Rectangle(worldPos.X, worldPos.Y, hitboxSize.X, hitboxSize.Y);
     }
     public static void LoadTilesFromDirectory()
     {
         string root = @"tiles\";
 
-
         string[] tiles = Directory.GetFiles(root);
         foreach (string tile in tiles)
         {
-            allTiles.Add(tile.Replace(@"tiles\", "").Replace(@".png", ""), Raylib.LoadTexture(tile));
+            textures.Add(tile.Replace(@"tiles\", "").Replace(@".png", ""), Raylib.LoadTexture(tile));
         }
     }
 }

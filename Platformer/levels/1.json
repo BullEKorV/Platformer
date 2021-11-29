@@ -1,0 +1,59 @@
+[
+    {
+        "level": 1,
+        "tiles": [
+            {
+                "x": 0,
+                "y": 0,
+                "type": "grass"
+            },
+            {
+                "x": 1,
+                "y": 0,
+                "type": "grass"
+            },
+            {
+                "x": 2,
+                "y": 0,
+                "type": "grass"
+            }
+        ],
+        "enemies": [
+            {
+                "x": 1,
+                "y": 2,
+                "type": "opossum"
+            },
+            {
+                "x": 1,
+                "y": 1,
+                "type": "opossum"
+            },
+            {
+                "x": 2,
+                "y": 1,
+                "type": "opossum"
+            }
+        ]
+    },
+    {
+        "level": 2,
+        "tiles": [
+            {
+                "x": 0,
+                "y": 0,
+                "type": "grass"
+            },
+            {
+                "x": 1,
+                "y": 0,
+                "type": "grass"
+            },
+            {
+                "x": 2,
+                "y": 0,
+                "type": "grass"
+            }
+        ]
+    }
+]

@@ -7,7 +7,6 @@ public class Enemy : Entity
     protected int yOffset;
     public Enemy()
     {
-
     }
     public override void Update()
     {

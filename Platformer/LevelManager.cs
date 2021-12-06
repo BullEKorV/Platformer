@@ -7,7 +7,7 @@ public class LevelManager
     public static void LoadLevel()
     {
         ClearLevel();
-        Level lvl = GetLevelsJson().Find(x => x.level == currentLevel);
+        Level lvl = GetLevelJson();
 
         // Load tiles and enemies to gameobjects
         foreach (JsonGameobject tile in lvl.tiles)
@@ -27,7 +27,7 @@ public class LevelManager
         GameObject.gameObjects.RemoveAll(x => (x is Tile));
         GameObject.gameObjects.RemoveAll(x => (x is Enemy));
     }
-    static List<Level> GetLevelsJson()
+    static Level GetLevelJson()
     {
         string root = @"levels\";
 
@@ -35,9 +35,9 @@ public class LevelManager
 
         string response = File.ReadAllText(levelsDir[currentLevel - 1]);
 
-        List<Level> levels = JsonSerializer.Deserialize<List<Level>>(response);
+        Level level = JsonSerializer.Deserialize<Level>(response);
 
-        return levels;
+        return level;
     }
 }
 

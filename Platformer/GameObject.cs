@@ -26,7 +26,7 @@ public class GameObject
         cameraPosition = new Vector2(0, 0); // Temporarily disable player follow
 
         // BAD ???
-        Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)cameraPosition.X, newRect.y + (int)cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
+        // Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)cameraPosition.X, newRect.y + (int)cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
 
         DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)cameraPosition.X, newRect.y - textureOffset.Y + (int)cameraPosition.Y), worldScale, lookingRight);
 

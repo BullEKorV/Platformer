@@ -13,7 +13,7 @@ public class Entity : GameObject
     {
         base.Update();
 
-        velocity.Y -= 5f;
+        velocity.Y -= 7f;
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)

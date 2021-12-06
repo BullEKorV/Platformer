@@ -1,7 +1,9 @@
 public class Player : Entity
 {
     protected int hp;
-    int jumpForce = 480;
+    int jumpForce = 340;
+    float longJumpTimer;
+    bool longJumpActive;
     public float invisibilityTimer = 0;
     public Player() : base()
     {
@@ -20,8 +22,13 @@ public class Player : Entity
     {
         base.Update();
 
+        // Lower character invisibility timer
         invisibilityTimer -= Raylib.GetFrameTime();
         invisibilityTimer = Math.Max(0, invisibilityTimer);
+
+        // Lower long jump timer
+        longJumpTimer -= Raylib.GetFrameTime();
+        longJumpTimer = Math.Max(0, longJumpTimer);
 
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
         {
@@ -36,11 +43,19 @@ public class Player : Entity
 
         velocity.X *= 0.8f;
 
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && touchingGround)
+        // Jump logic
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)
         {
+            longJumpTimer = 0.6f;
+            longJumpActive = true;
             velocity.Y = jumpForce;
             touchingGround = false;
         }
+        // Long jump logic
+        if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
+            longJumpActive = false;
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && longJumpActive && longJumpTimer > 0)
+            velocity.Y += 5 * longJumpTimer * 3;
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)
@@ -49,22 +64,15 @@ public class Player : Entity
                 CheckEnemyCollision((Enemy)gameObject);
         }
 
-
+        // Character animations
         if (Math.Abs(velocity.X) > 4)
-        {
             animation = Animation.allAnimations["player-run"];
-        }
         else
-        {
             animation = Animation.allAnimations["player-idle"];
-        }
-
         if (velocity.Y > 0)
             animation = Animation.allAnimations["player-jump-up"];
         if (velocity.Y < -0)
             animation = Animation.allAnimations["player-jump-down"];
-
-
     }
     void CheckEnemyCollision(Enemy enemy)
     {

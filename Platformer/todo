@@ -1,16 +1,13 @@
-Fix slowdown on side of block when falling and pressed against
-
 Fix jumping and smoother movement // Kinda
 
 Cherry give health
  
 Gem give score
 
-Fix collision with enemies
-    Kill enemy when jump on top
-    Lose health otherwise
-        Become invisible for short period of time after
-
 Enemy AI
+    Move til hit object?
+    Markers?
+    Or set coordinates?
+    Go towards player?
 
 Level maker

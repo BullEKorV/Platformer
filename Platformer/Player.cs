@@ -4,7 +4,7 @@ public class Player : Entity
     int jumpForce = 340;
     float longJumpTimer;
     bool longJumpActive;
-    public float invisibilityTimer = 0;
+    float invisibilityTimer = 0;
     public Player() : base()
     {
         speed = 40;
@@ -30,18 +30,23 @@ public class Player : Entity
         longJumpTimer -= Raylib.GetFrameTime();
         longJumpTimer = Math.Max(0, longJumpTimer);
 
+        float xVelocity = 0;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
         {
             lookingRight = false;
-            velocity.X -= speed;
+            xVelocity -= speed;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
         {
             lookingRight = true;
-            velocity.X += speed;
+            xVelocity += speed;
+        }
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
+        {
+            xVelocity *= 1.4f;
         }
 
-        velocity.X *= 0.8f;
+        velocity.X = (velocity.X + xVelocity) * 0.86f;
 
         // Jump logic
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)

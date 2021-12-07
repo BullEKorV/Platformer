@@ -15,7 +15,6 @@ public class GameObject
     }
     public void Draw()
     {
-        int worldScale = 5;
         Rectangle newRect = FlipYAxis(rect);
 
         Rectangle player = gameObjects.Find(x => (x is Player)).rect;
@@ -26,9 +25,9 @@ public class GameObject
         cameraPosition = new Vector2(0, 0); // Temporarily disable player follow
 
         // BAD ???
-        // Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)cameraPosition.X, newRect.y + (int)cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
+        Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)cameraPosition.X, newRect.y + (int)cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
 
-        DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)cameraPosition.X, newRect.y - textureOffset.Y + (int)cameraPosition.Y), worldScale, lookingRight);
+        DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)cameraPosition.X, newRect.y - textureOffset.Y + (int)cameraPosition.Y), 5, lookingRight);
 
 
         // Raylib.DrawTextureEx(texture, new Vector2(newRect.x + textureOffset.X + cameraPosition.X, newRect.y - textureOffset.Y + cameraPosition.Y), 0, worldScale, Color.WHITE);

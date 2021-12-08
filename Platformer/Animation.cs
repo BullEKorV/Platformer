@@ -39,9 +39,6 @@ public class Animation
     public int AdvanceFrame(int currentFrame)
     {
         currentFrame++;
-        // Console.WriteLine("total: " + totalFrames);
-        // Console.WriteLine("current:" + currentFrame);
-        // Console.WriteLine("total time:" + totalFrames * framesPerFrame);
         if (currentFrame * framesPerFrame >= totalFrames * framesPerFrame)
         {
             currentFrame = 0;

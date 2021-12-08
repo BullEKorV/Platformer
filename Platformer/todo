@@ -1,5 +1,8 @@
 Fix jumping and smoother movement // Kinda
 
+Fix camera movement
+    Camera track player velocity
+
 Cherry give health
  
 Gem give score
@@ -11,3 +14,9 @@ Enemy AI
     Go towards player?
 
 Level maker
+
+
+Known issues// (maybe fix)
+Animation framerate is dependent from framerate (slower the fps, slower the animation)
+Really poorly written collision system
+    Get's really janky at low fps, starts bumping into stuff etc

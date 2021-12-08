@@ -13,7 +13,8 @@ public class Entity : GameObject
     {
         base.Update();
 
-        velocity.Y -= 7f;
+        // Gravity 
+        velocity.Y -= 860 * Raylib.GetFrameTime();
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
@@ -34,13 +35,13 @@ public class Entity : GameObject
     protected void CheckCollision(Rectangle tile)
     {
         // Console.WriteLine($"entity: {rect.x} {rect.y} tile: {tile.x} {tile.y}");
-        if (rect.x <= tile.x + tile.width && rect.x > tile.x && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)
+        if (rect.x + velocity.X * Raylib.GetFrameTime() <= tile.x + tile.width && rect.x > tile.x && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)
         {
             // Console.WriteLine("left");
             rect.x = tile.x + tile.width;
             velocity.X = 1;
         }
-        if (rect.x + rect.width >= tile.x && rect.x + rect.width < tile.x + tile.width && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)
+        if (rect.x + rect.width + velocity.X * Raylib.GetFrameTime() >= tile.x && rect.x + rect.width < tile.x + tile.width && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)
         {
             // Console.WriteLine("right");
             rect.x = tile.x - rect.width;

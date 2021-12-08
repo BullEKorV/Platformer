@@ -1,7 +1,5 @@
 public class Enemy : Entity
 {
-    int damage;
-
     protected int xOffsetBase;
     protected int xOffsetDiff;
     protected int yOffset;

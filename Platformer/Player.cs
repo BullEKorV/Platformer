@@ -45,6 +45,7 @@ public class Player : Entity
         {
             xVelocity *= 1.4f;
         }
+        Console.WriteLine(velocity.X + " : " + velocity.Y);
 
         velocity.X = (velocity.X + xVelocity) * 0.86f;
 
@@ -60,7 +61,7 @@ public class Player : Entity
         if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
             longJumpActive = false;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && longJumpActive && longJumpTimer > 0)
-            velocity.Y += 5 * longJumpTimer * 3;
+            velocity.Y += 1800 * longJumpTimer * Raylib.GetFrameTime();
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)
@@ -81,13 +82,15 @@ public class Player : Entity
     }
     void CheckEnemyCollision(Enemy enemy)
     {
-        int extraDepth = 10;
+        int extraDepth = 13;
 
-        bool isOverlapping = Raylib.CheckCollisionRecs(rect, enemy.rect);
+        Rectangle rectVelocity = new Rectangle(rect.x + velocity.X * Raylib.GetFrameTime(), rect.y + velocity.Y * Raylib.GetFrameTime(), rect.width, rect.height); // Maybe better??
+
+        bool isOverlapping = Raylib.CheckCollisionRecs(rectVelocity, enemy.rect);
 
         if (isOverlapping)
         {
-            if (rect.y + velocity.Y * Raylib.GetFrameTime() >= enemy.rect.y + enemy.rect.height - extraDepth && velocity.Y < 0) // If you come from above enemy dies
+            if (rectVelocity.y >= enemy.rect.y + enemy.rect.height - extraDepth && velocity.Y < 0) // If you come from above enemy dies
             {
                 velocity.Y = 300;
                 enemy.Die();
@@ -97,6 +100,10 @@ public class Player : Entity
                 DamageTaken();
             }
         }
+    }
+    public Vector2 GetVelocity()
+    {
+        return velocity;
     }
     void DamageTaken()
     {

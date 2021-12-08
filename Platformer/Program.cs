@@ -26,6 +26,8 @@ class Program
                 return (x is Entity) ? !((Entity)x).isAlive : false;
             });
 
+            Camera.Update();
+
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
 

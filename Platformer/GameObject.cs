@@ -17,21 +17,9 @@ public class GameObject
     {
         Rectangle newRect = FlipYAxis(rect);
 
-        Rectangle player = gameObjects.Find(x => (x is Player)).rect;
+        Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)Camera.viewPos.X, newRect.y + (int)Camera.viewPos.Y, newRect.width, newRect.height), Color.GOLD);
 
-        // Follow player
-        Vector2 cameraPosition = new Vector2(-player.x + Raylib.GetScreenWidth() / 2 - player.width / 2, player.y - Raylib.GetScreenWidth() / 4);
-
-        cameraPosition = new Vector2(0, 0); // Temporarily disable player follow
-
-        // BAD ???
-        Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)cameraPosition.X, newRect.y + (int)cameraPosition.Y, newRect.width, newRect.height), Color.GOLD);
-
-        DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)cameraPosition.X, newRect.y - textureOffset.Y + (int)cameraPosition.Y), 5, lookingRight);
-
-
-        // Raylib.DrawTextureEx(texture, new Vector2(newRect.x + textureOffset.X + cameraPosition.X, newRect.y - textureOffset.Y + cameraPosition.Y), 0, worldScale, Color.WHITE);
-        // Console.WriteLine(rect.width / texture.width);
+        DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)Camera.viewPos.X, newRect.y - textureOffset.Y + (int)Camera.viewPos.Y), 5, lookingRight);
     }
     public void DrawTexture(Texture2D texture, Vector2 position, float scale, bool lookingRight)
     {

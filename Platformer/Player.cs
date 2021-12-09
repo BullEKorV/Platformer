@@ -1,9 +1,9 @@
 public class Player : Entity
 {
     protected int hp;
-    int jumpForce = 340;
-    float longJumpTimer;
-    bool longJumpActive;
+    int jumpForce = 420;
+    float highJumpTimer;
+    bool highJumpActive;
     float invisibilityTimer = 0;
     public Player() : base()
     {
@@ -26,9 +26,9 @@ public class Player : Entity
         invisibilityTimer -= Raylib.GetFrameTime();
         invisibilityTimer = Math.Max(0, invisibilityTimer);
 
-        // Lower long jump timer
-        longJumpTimer -= Raylib.GetFrameTime();
-        longJumpTimer = Math.Max(0, longJumpTimer);
+        // Lower high jump timer
+        highJumpTimer -= Raylib.GetFrameTime();
+        highJumpTimer = Math.Max(0, highJumpTimer);
 
         float xVelocity = 0;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
@@ -52,16 +52,16 @@ public class Player : Entity
         // Jump logic
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)
         {
-            longJumpTimer = 0.6f;
-            longJumpActive = true;
+            highJumpTimer = 0.613f;
+            highJumpActive = true;
             velocity.Y = jumpForce;
             touchingGround = false;
         }
-        // Long jump logic
+        // high jump logic
         if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
-            longJumpActive = false;
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && longJumpActive && longJumpTimer > 0)
-            velocity.Y += 1800 * longJumpTimer * Raylib.GetFrameTime();
+            highJumpActive = false;
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive && highJumpTimer > 0)
+            velocity.Y += 2000 * highJumpTimer * Raylib.GetFrameTime();
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)
@@ -104,6 +104,10 @@ public class Player : Entity
     public Vector2 GetVelocity()
     {
         return velocity;
+    }
+    public void DisableHighJump()
+    {
+        highJumpActive = false;
     }
     void DamageTaken()
     {

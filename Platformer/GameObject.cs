@@ -19,9 +19,6 @@ public class GameObject
 
         Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)Camera.viewPos.X, newRect.y + (int)Camera.viewPos.Y, newRect.width, newRect.height), Color.GOLD);
 
-        // if (lookingRight == true) Raylib.DrawRectangleRec(new Rectangle(newRect.x + (int)Camera.viewPos.X, newRect.y + (int)Camera.viewPos.Y, newRect.width, newRect.height), Color.BLUE);
-
-
         DrawTexture(texture, new Vector2(newRect.x + textureOffset.X + (int)Camera.viewPos.X, newRect.y - textureOffset.Y + (int)Camera.viewPos.Y), 5, lookingRight);
     }
     public void DrawTexture(Texture2D texture, Vector2 position, float scale, bool lookingRight)

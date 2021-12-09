@@ -7,28 +7,18 @@ public class Camera
     {
         Player player = (Player)GameObject.gameObjects.Find(x => (x is Player));
         Vector2 targetVelocity = player.GetVelocity();
-        Vector2 velocityMultiplier = new Vector2(0.4f, 0.25f);
+        Vector2 velocityMultiplier = new Vector2(0.35f, 0.2f);
 
-        // velocityMultiplier = new Vector2(0, 0);
         Vector2 targetPos = new Vector2(player.rect.x + targetVelocity.X * velocityMultiplier.X, player.rect.y + targetVelocity.Y * velocityMultiplier.Y);
 
         // Follow player
-        // Console.WriteLine(position.X + " : " + velocity.X + " : " + targetPos.X);
+        float maxSpeed = 1000f;
 
-
-        // velocity = new Vector2(SmoothDamp(position.X, targetPos.X, ref velocity.X, 0.5f, 0.1f, Raylib.GetFrameTime()), SmoothDamp(position.Y, targetPos.Y, ref velocity.Y, 0.5f, 0.1f, Raylib.GetFrameTime()));
-
-        float smoothness = 6.5f;
-        velocity = (targetPos - position) * Raylib.GetFrameTime() * smoothness;
-
-        // velocity.X = (targetPos.X - position.X) / 10 * Raylib.GetFrameTime();
-        // velocity.Y = (targetPos.Y - position.Y) / 10 * Raylib.GetFrameTime();
-
-        position += velocity;
+        position = new Vector2(SmoothDamp(position.X, targetPos.X, ref velocity.X, 0.2f, maxSpeed, Raylib.GetFrameTime()), SmoothDamp(position.Y, targetPos.Y, ref velocity.Y, 0.3f, maxSpeed, Raylib.GetFrameTime()));
 
         viewPos = new Vector2(-position.X + Raylib.GetScreenWidth() / 2 - player.rect.width / 2, position.Y - Raylib.GetScreenWidth() / 4);
     }
-    static float SmoothDamp(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+    static float SmoothDamp(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime) // Stolen from Unity ;()
     {
         // Based on Game Programming Gems 4 Chapter 1.10
         smoothTime = Math.Max(0.0001F, smoothTime);

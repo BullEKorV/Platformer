@@ -14,7 +14,7 @@ public class Entity : GameObject
         base.Update();
 
         // Gravity 
-        velocity.Y -= 860 * Raylib.GetFrameTime();
+        velocity.Y -= 1000 * Raylib.GetFrameTime();
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
@@ -60,6 +60,7 @@ public class Entity : GameObject
             // Console.WriteLine("up");
             rect.y = tile.y - rect.height;
             velocity.Y = 0;
+            if (this is (Player)) ((Player)this).DisableHighJump(); // Disable high jump if touching ceiling
         }
     }
 }

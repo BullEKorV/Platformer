@@ -1,13 +1,13 @@
 public class Player : Entity
 {
     protected int hp;
-    int jumpForce = 420;
+    int jumpForce = 480;
     float highJumpTimer;
     bool highJumpActive;
     float invisibilityTimer = 0;
     public Player() : base()
     {
-        speed = 40;
+        speed = 50;
         hp = 3;
 
         animation = Animation.allAnimations["player-idle"];
@@ -52,7 +52,7 @@ public class Player : Entity
         // Jump logic
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)
         {
-            highJumpTimer = 0.613f;
+            highJumpTimer = 0.628f;
             highJumpActive = true;
             velocity.Y = jumpForce;
             touchingGround = false;
@@ -61,7 +61,7 @@ public class Player : Entity
         if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
             highJumpActive = false;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive && highJumpTimer > 0)
-            velocity.Y += 2000 * highJumpTimer * Raylib.GetFrameTime();
+            velocity.Y += 2300 * highJumpTimer * Raylib.GetFrameTime();
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)

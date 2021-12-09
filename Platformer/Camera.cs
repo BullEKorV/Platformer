@@ -7,7 +7,7 @@ public class Camera
     {
         Player player = (Player)GameObject.gameObjects.Find(x => (x is Player));
         Vector2 targetVelocity = player.GetVelocity();
-        Vector2 velocityMultiplier = new Vector2(45 * Raylib.GetFrameTime(), 25 * Raylib.GetFrameTime());
+        Vector2 velocityMultiplier = new Vector2(0.4f, 0.25f);
 
         // velocityMultiplier = new Vector2(0, 0);
         Vector2 targetPos = new Vector2(player.rect.x + targetVelocity.X * velocityMultiplier.X, player.rect.y + targetVelocity.Y * velocityMultiplier.Y);

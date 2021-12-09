@@ -15,6 +15,7 @@ Enemy AI
 
 Level maker
 
+Hold W to look up and S to look down
 
 Known issues// (maybe fix)
 Animation framerate is dependent from framerate (slower the fps, slower the animation)

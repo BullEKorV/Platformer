@@ -45,7 +45,7 @@ public class Player : Entity
         {
             xVelocity *= 1.4f;
         }
-        Console.WriteLine(velocity.X + " : " + velocity.Y);
+        // Console.WriteLine(rect.x + " : " + rect.y);
 
         velocity.X = (velocity.X + xVelocity) * 0.86f;
 

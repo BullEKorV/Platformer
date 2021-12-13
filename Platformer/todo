@@ -2,6 +2,9 @@ Cherry give health
  
 Gem give score
 
+Camera 
+    Silent box? Can move a little without camera following
+
 Enemy AI
     Move til hit object?
     Markers?
@@ -12,7 +15,12 @@ Level maker
 
 Hold W to look up and S to look down
 
+UI 
+    Make buttons look better
+        Texture?
+
 Known issues// (maybe fix)
+Camera go too slow( character out of scene)
 Animation framerate is dependent from framerate (slower the fps, slower the animation)
 Really poorly written collision system
     Get's really janky at low fps, starts bumping into stuff etc

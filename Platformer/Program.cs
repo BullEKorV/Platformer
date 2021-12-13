@@ -10,14 +10,23 @@ class Program
         Animation.LoadAnimationsFromDirectories();
         Tile.LoadTilesFromDirectory();
         LevelManager.LoadLevel();
+        UI.LoadUIFromJSON();
 
         new Player();
+        // new UI("help", new List<Button>() { new Button("Hej", Button.WriteHello, new Rectangle(100, 10, 100, 50), Color.BLUE) });
 
         while (!Raylib.WindowShouldClose())
         {
+            Camera.Update();
+
             foreach (GameObject obj in GameObject.gameObjects)
             {
                 obj.Update();
+            }
+
+            foreach (UI screen in UI.allScreens)
+            {
+                screen.Update();
             }
 
             // Remove dead enemies
@@ -26,7 +35,7 @@ class Program
                 return (x is Entity) ? !((Entity)x).isAlive : false;
             });
 
-            Camera.Update();
+            // UIScreen.buttons.Add(new Button(Button.WriteHello, new Rectangle(10, 10, 100, 100), Color.BLUE));
 
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
@@ -37,12 +46,12 @@ class Program
             }
 
             GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
-            // if (obj is Player)
-            // {
-            //     Raylib.DrawText(((Player)obj).hp.ToString(), 100, 0, 20, Color.BLUE);
-            //     if (((Player)obj).invisibilityTimer == 0)
-            //         Raylib.DrawRectangle(100, 100, 100, 100, Color.BLACK);
-            // }
+
+            foreach (UI screen in UI.allScreens)
+            {
+                if (screen.isActive) screen.Draw();
+            }
+
             Raylib.EndDrawing();
         }
     }

@@ -1,4 +1,4 @@
-using System.Text.Json;
+global using System.Text.Json;
 public class LevelManager
 {
     public static List<Level> allLevels = new List<Level>();

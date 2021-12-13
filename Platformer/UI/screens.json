@@ -1,0 +1,19 @@
+[
+    {
+        "name": "main",
+        "buttons": [
+            {
+                "name": "first",
+                "action": "Button.WriteHello()",
+                "rect": {
+                    "x": 10,
+                    "y": 10,
+                    "width": 10,
+                    "height": 20
+                },
+                "color": "blue"
+            }
+        ],
+        "isActive": true
+    }
+]

@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Raylib.InitWindow(1000, 800, "Platformer");
+        Raylib.InitWindow(1200, 800, "Platformer");
         Raylib.SetTargetFPS(120);
 
         Animation.LoadAnimationsFromDirectories();
@@ -13,7 +13,6 @@ class Program
         UI.LoadUIFromJSON();
 
         new Player();
-        // new UI("help", new List<Button>() { new Button("Hej", Button.WriteHello, new Rectangle(100, 10, 100, 50), Color.BLUE) });
 
         while (!Raylib.WindowShouldClose())
         {
@@ -47,7 +46,6 @@ class Program
 
             foreach (UI screen in UI.allScreens)
             {
-                // Console.WriteLine(screen.buttons[0].rect.x);
                 if (screen.isActive) screen.Draw();
             }
 

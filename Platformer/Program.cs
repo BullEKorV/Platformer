@@ -35,8 +35,6 @@ class Program
                 return (x is Entity) ? !((Entity)x).isAlive : false;
             });
 
-            // UIScreen.buttons.Add(new Button(Button.WriteHello, new Rectangle(10, 10, 100, 100), Color.BLUE));
-
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
 
@@ -49,6 +47,7 @@ class Program
 
             foreach (UI screen in UI.allScreens)
             {
+                // Console.WriteLine(screen.buttons[0].rect.x);
                 if (screen.isActive) screen.Draw();
             }
 

@@ -3,7 +3,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public string name;
     public Action action;
     public Rectangle rect;
-    private Color color;
+    public Color color = Color.BLUE;
     private bool isMouseOver = false;
     public Button(string name, Action action, Rectangle rect, Color color)
     {
@@ -15,7 +15,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public void Draw()
     {
         Raylib.DrawRectangleRec(rect, color);
-        if (isMouseOver) Raylib.DrawRectangleRec(rect, new Color(color.r + 100, color.g + 10, color.b - 20, color.a));
+        if (isMouseOver) Raylib.DrawRectangleRec(rect, new Color(color.r, color.g, color.b, color.a));
 
         int margin = 10;
         Rectangle tempRect = new Rectangle(rect.x + margin, rect.y + margin, rect.width - margin * 2, rect.height - margin * 2);
@@ -39,5 +39,9 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public static void WriteHello()
     {
         Console.WriteLine("UWUWU");
+    }
+    public static void WriteNo()
+    {
+        Console.WriteLine("No");
     }
 }

@@ -45,20 +45,14 @@ class UIJson
 class UIButton
 {
     public string name { get; set; }
+    Dictionary<string, Action> allActions = new Dictionary<string, Action> { { "WriteHello", Button.WriteHello } };
     public Action action
     {
         get { return action; }
         set
         {
-            action = (Action)(value);
+            action = allActions[value.ToString()];
         }
     }
-    public Rectangle rect
-    {
-        get { return rect; }
-        set
-        {
-            rect = new Rectangle(value.x, value.y, value.width, value.height);
-        }
-    }
+    public Rectangle rect { get; set; }
 }

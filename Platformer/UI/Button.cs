@@ -33,15 +33,36 @@ public class Button // IS CALCULATED FROM TOP LEFT
         }
         if (isMouseOver && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
         {
+            Console.WriteLine(action.Method);
             action.Invoke();
         }
     }
-    public static void WriteHello()
+    public static void NewGame()
     {
-        Console.WriteLine("UWUWU");
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
     }
-    public static void WriteNo()
+    public static void LevelSelect()
     {
-        Console.WriteLine("No");
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "Level Select");
+    }
+    public static void CreateLevel()
+    {
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+    }
+    public static void Settings()
+    {
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "Settings");
+    }
+    public static void MainMenu()
+    {
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
+    }
+    public static void LoadLevel(string level)
+    {
+
+    }
+    public static void EndApp()
+    {
+        Program.windowShouldClose = true;
     }
 }

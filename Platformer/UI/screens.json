@@ -1,34 +1,58 @@
 [
     {
-        "allScreens": [],
-        "name": "mainmenu",
+        "name": "Main Menu",
         "buttons": [
             {
                 "name": "New Game",
-                "action": "WriteNo",
+                "action": "NewGame",
+                "color": "red",
+                "halfButton": true
+            },
+            {
+                "name": "Level Select",
+                "action": "LevelSelect",
                 "color": "red"
             },
             {
-                "name": "Load Level",
-                "action": "WriteHello",
+                "name": "Create Level",
+                "action": "CreateLevel",
                 "color": "red"
             },
             {
-                "name": "Bitch",
-                "action": "WriteHello",
+                "name": "Settings",
+                "action": "Settings",
                 "color": "red"
             },
             {
-                "name": "Load Level",
-                "action": "WriteHello",
-                "color": "red"
-            },
-            {
-                "name": "Load Level",
-                "action": "WriteHello",
+                "name": "Exit Game",
+                "action": "EndApp",
                 "color": "red"
             }
-        ],
-        "isActive": true
+        ]
+    },
+    {
+        "name": "Level Select",
+        "buttons": [
+            {
+                "name": "Main Menu",
+                "action": "MainMenu",
+                "color": "red",
+                "bottomPlacement": true
+            }
+        ]
+    },
+    {
+        "name": "Settings",
+        "buttons": [
+            {
+                "name": "Main Menu",
+                "action": "MainMenu",
+                "color": "red"
+            }
+        ]
+    },
+    {
+        "name": "",
+        "buttons": []
     }
 ]

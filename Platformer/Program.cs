@@ -2,19 +2,22 @@
 global using Raylib_cs;
 class Program
 {
+    public static bool windowShouldClose = false;
     static void Main(string[] args)
     {
         Raylib.InitWindow(1200, 800, "Platformer");
         Raylib.SetTargetFPS(120);
+        Raylib.SetExitKey(0);
 
         Animation.LoadAnimationsFromDirectories();
         Tile.LoadTilesFromDirectory();
-        LevelManager.LoadLevel();
+        LevelManager.LoadLevel(1);
         UI.LoadUIFromJSON();
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
 
         new Player();
 
-        while (!Raylib.WindowShouldClose())
+        while (!Raylib.WindowShouldClose() && !windowShouldClose)
         {
             Camera.Update();
 
@@ -23,16 +26,16 @@ class Program
                 obj.Update();
             }
 
-            foreach (UI screen in UI.allScreens)
-            {
-                screen.Update();
-            }
+            // UI button presses etc.
+            UI.currentScreen.Update();
 
             // Remove dead enemies
             GameObject.gameObjects.RemoveAll(x =>
             {
                 return (x is Entity) ? !((Entity)x).isAlive : false;
             });
+
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && UI.currentScreen.name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
 
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
@@ -44,10 +47,7 @@ class Program
 
             GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
 
-            foreach (UI screen in UI.allScreens)
-            {
-                if (screen.isActive) screen.Draw();
-            }
+            UI.currentScreen.Draw();
 
             Raylib.EndDrawing();
         }

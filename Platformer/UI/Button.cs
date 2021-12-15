@@ -41,6 +41,10 @@ public class Button // IS CALCULATED FROM TOP LEFT
     {
         UI.currentScreen = UI.allScreens.Find(x => x.name == "");
     }
+    public static void Resume()
+    {
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+    }
     public static void LevelSelect()
     {
         UI.currentScreen = UI.allScreens.Find(x => x.name == "Level Select");

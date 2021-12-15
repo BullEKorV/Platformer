@@ -31,23 +31,22 @@ public class Player : Entity
         highJumpTimer = Math.Max(0, highJumpTimer);
 
         float xVelocity = 0;
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_A) && Program.timeScale > 0)
         {
             lookingRight = false;
-            xVelocity -= speed;
+            xVelocity -= speed * Program.timeScale;
         }
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_D) && Program.timeScale > 0)
         {
             lookingRight = true;
-            xVelocity += speed;
+            xVelocity += speed * Program.timeScale;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
         {
             xVelocity *= 1.4f;
         }
-        // Console.WriteLine(rect.x + " : " + rect.y);
 
-        velocity.X = (velocity.X + xVelocity) * 0.86f;
+        if (Program.timeScale > 0) velocity.X = (velocity.X + xVelocity) * 0.86f;
 
         // Jump logic
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)

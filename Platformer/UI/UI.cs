@@ -20,14 +20,15 @@ public class UI // IS CALCULATED FROM TOP LEFT
     }
     public void Draw()
     {
-        if (currentScreen.name != "") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 150)); // make darker
+        if (currentScreen.name != "") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 180)); // make darker
 
-        Raylib.DrawText(currentScreen.name, Raylib.GetScreenWidth() / 2 - Raylib.MeasureText(currentScreen.name, 90) / 2, 10, 90, Color.BLACK);
+        Raylib.DrawText(currentScreen.name, Raylib.GetScreenWidth() / 2 - Raylib.MeasureText(currentScreen.name, 90) / 2, Raylib.GetScreenHeight() / 18, 90, Color.WHITE);
         foreach (Button butt in buttons)
         {
             butt.Draw();
         }
-        Raylib.DrawLine(0, Raylib.GetScreenHeight() / 2, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() / 2, Color.BLUE);
+        // Raylib.DrawLine(0, Raylib.GetScreenHeight() / 2, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() / 2, Color.BLUE); // center line
+        // Raylib.DrawLine(Raylib.GetScreenWidth() / 2, 0, Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight(), Color.BLUE); // center line
     }
     public static void LoadUIFromJSON()
     {
@@ -43,7 +44,8 @@ public class UI // IS CALCULATED FROM TOP LEFT
             int buttonHeight = (int)(Raylib.GetScreenHeight() / 10);
             int buttonSpacing = (int)(Raylib.GetScreenHeight() / 25);
             int x = Raylib.GetScreenWidth() / 2 - buttonWidth / 2;
-            int y = (Raylib.GetScreenHeight() - (ui.buttons.Count * buttonHeight + (ui.buttons.Count - 1) * buttonSpacing)) / 2;
+            int extraButtonsAmount = ui.buttons.FindAll(x => x.halfButton == true).Count + ui.buttons.FindAll(x => x.bottomPlacement == true).Count; // Keep centered even with halfbuttons and bottomplacement, otherwise it got miscalculated
+            int y = (Raylib.GetScreenHeight() - ((ui.buttons.Count - extraButtonsAmount) * buttonHeight + (ui.buttons.Count - 1 - extraButtonsAmount) * buttonSpacing)) / 2;
 
             bool lastButtonHalf = false;
             foreach (UIButton button in ui.buttons)
@@ -64,48 +66,49 @@ public class UI // IS CALCULATED FROM TOP LEFT
 
                 lastButtonHalf = button.halfButton;
             }
-            if (ui.name == "Level Select") tempButtons.AddRange(LoadLevelsToButtons(x));
+            if (ui.name == "Level Select") tempButtons.AddRange(LoadLevelsToButtons());
 
             new UI(ui.name, tempButtons);
         }
     }
-    public static List<Button> LoadLevelsToButtons(int startX)
+    public static List<Button> LoadLevelsToButtons()
     {
-        List<Button> LevelButtons = new List<Button>();
+        List<Button> levelButtons = new List<Button>();
 
-        string root = @"levels\";
+        string[] levelsDir = Directory.GetFiles(@"levels\"); // Get all level filenames
 
-        string[] levelsDir = Directory.GetFiles(root);
+        levelsDir = levelsDir.OrderBy(i => i.Substring(4).Remove(0, 7)).ToArray(); // Reorder list because c# thinks 10 comes before 2 >:(
 
-        levelsDir = levelsDir.OrderBy(i => i.ToString().Substring(4).Remove(0, 7)).ToArray(); // Reorder list because c# thinks 10 comes before 2 >:(
-
-        int width = (int)(Raylib.GetScreenWidth() / 10f);
+        // bunch of determening variables for button placement
+        int width = (int)(Raylib.GetScreenWidth() / 15f);
         int spacing = (int)(Raylib.GetScreenHeight() / 25);
         int levelsPerRow = 5;
         int rowAmounts = (int)Math.Ceiling((double)levelsDir.Length / levelsPerRow);
-        int x = startX;
+        int x = (Raylib.GetScreenWidth() - (levelsPerRow * width + ((levelsPerRow - 1) * spacing))) / 2;
         int y = (Raylib.GetScreenHeight() - (rowAmounts * width + ((rowAmounts - 1) * spacing))) / 2;
-
-        // int uwu = (int)Math.Ceiling(12.44);
 
         for (int i = 0; i < levelsDir.Length; i++)
         {
+            // Give a nice offcenter to last row if not enough
+            if (levelsPerRow * rowAmounts % levelsDir.Length != 0 && i == levelsPerRow * (rowAmounts - 1))
+                x = (Raylib.GetScreenWidth() - ((levelsDir.Length - i) * width + ((levelsDir.Length - i - 1) * spacing))) / 2;
+
             string response = File.ReadAllText(levelsDir[i]);
 
             string levelName = JsonSerializer.Deserialize<Level>(response).level.ToString();
 
-            LevelButtons.Add(new Button(levelName, () => Button.LoadLevel(levelName), new Rectangle(x, y, width, width), Color.BLUE));
+            // add button
+            levelButtons.Add(new Button(levelName, () => Button.LoadLevel(levelName), new Rectangle(x, y, width, width), Color.BLUE));
 
             x += width + spacing;
             if ((i + 1) % levelsPerRow == 0)
             {
                 Console.WriteLine(i / levelsPerRow);
                 y += width + spacing;
-                x = startX;
+                x = (Raylib.GetScreenWidth() - (levelsPerRow * width + ((levelsPerRow - 1) * spacing))) / 2;
             }
         }
-
-        return LevelButtons;
+        return levelButtons;
     }
 }
 class UIJson
@@ -117,7 +120,7 @@ class UIJson
 class UIButton
 {
     public string name { get; set; }
-    Dictionary<string, Action> allActions = new Dictionary<string, Action> { { "NewGame", Button.NewGame }, { "LevelSelect", Button.LevelSelect },
+    Dictionary<string, Action> allActions = new Dictionary<string, Action> { { "NewGame", Button.NewGame }, {"Resume",Button.Resume}, { "LevelSelect", Button.LevelSelect },
     { "CreateLevel", Button.CreateLevel }, { "Settings", Button.Settings }, { "MainMenu", Button.MainMenu }, { "EndApp", Button.EndApp } };
     public string action
     {

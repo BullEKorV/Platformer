@@ -14,7 +14,7 @@ public class Entity : GameObject
         base.Update();
 
         // Gravity 
-        velocity.Y -= 1300 * Raylib.GetFrameTime();
+        velocity.Y -= 1300 * Raylib.GetFrameTime() * Program.timeScale;
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
@@ -24,8 +24,8 @@ public class Entity : GameObject
         }
 
         // Update velocity
-        rect.x += velocity.X * Raylib.GetFrameTime();
-        rect.y += velocity.Y * Raylib.GetFrameTime();
+        rect.x += velocity.X * Raylib.GetFrameTime() * Program.timeScale;
+        rect.y += velocity.Y * Raylib.GetFrameTime() * Program.timeScale;
 
         // Animation stuff
         currentFrame = animation.AdvanceFrame(currentFrame);

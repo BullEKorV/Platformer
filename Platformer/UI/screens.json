@@ -31,6 +31,21 @@
         ]
     },
     {
+        "name": "Pause",
+        "buttons": [
+            {
+                "name": "Resume",
+                "action": "Resume",
+                "color": "red"
+            },
+            {
+                "name": "Main Menu",
+                "action": "MainMenu",
+                "color": "red"
+            }
+        ]
+    },
+    {
         "name": "Level Select",
         "buttons": [
             {

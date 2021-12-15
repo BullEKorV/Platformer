@@ -38,7 +38,7 @@ public class Animation
 
     public int AdvanceFrame(int currentFrame)
     {
-        currentFrame++;
+        currentFrame += (int)(1 * Program.timeScale);
         if (currentFrame * framesPerFrame >= totalFrames * framesPerFrame)
         {
             currentFrame = 0;

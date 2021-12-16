@@ -1,11 +1,11 @@
 public class Entity : GameObject
 {
-    public bool isAlive = true;
+    protected bool isAlive = true;
     protected Animation animation;
     protected Vector2 velocity;
     protected int speed;
     protected bool touchingGround;
-    protected int currentFrame = 0;
+    protected int currentFrame;
     public Entity() : base()
     {
     }
@@ -13,28 +13,25 @@ public class Entity : GameObject
     {
         base.Update();
 
-        // Gravity 
-        velocity.Y -= 1300 * Raylib.GetFrameTime() * Program.timeScale;
+        velocity.Y -= 260 * scale * Raylib.GetFrameTime() * Program.timeScale; // Gravity 
+        if (Program.timeScale > 0) velocity.X *= 0.86f; // Constrain xvelocity  FIX SCALE
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
-        {
             if (gameobject is Tile)
-                CheckCollision(gameobject.rect);
-        }
+                CheckCollisionTile(gameobject.rect);
 
         // Update velocity
         rect.x += velocity.X * Raylib.GetFrameTime() * Program.timeScale;
         rect.y += velocity.Y * Raylib.GetFrameTime() * Program.timeScale;
 
-        // Animation stuff
+        // Texture to frame in animation
         currentFrame = animation.AdvanceFrame(currentFrame);
         texture = animation.GetCurrentFrame(currentFrame);
     }
 
-    protected void CheckCollision(Rectangle tile)
+    protected void CheckCollisionTile(Rectangle tile) // Kinda iffy code, but still works 100%
     {
-        // Console.WriteLine($"entity: {rect.x} {rect.y} tile: {tile.x} {tile.y}");
         if (rect.x + velocity.X * Raylib.GetFrameTime() <= tile.x + tile.width && rect.x > tile.x && rect.y + rect.height > tile.y && rect.y < tile.y + tile.height)
         {
             // Console.WriteLine("left");
@@ -62,5 +59,9 @@ public class Entity : GameObject
             velocity.Y = 0;
             if (this is (Player)) ((Player)this).DisableHighJump(); // Disable high jump if touching ceiling
         }
+    }
+    public bool IsAlive()
+    {
+        return isAlive;
     }
 }

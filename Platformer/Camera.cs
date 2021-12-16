@@ -1,22 +1,27 @@
 public class Camera
 {
-    public static Vector2 viewPos = new Vector2();
-    static Vector2 position = new Vector2();
-    static Vector2 velocity = new Vector2();
+    public static Vector2 viewPos;
+    static Vector2 position;
+    static Vector2 velocity;
     public static void Update()
     {
+        // Get targetpos for camera to move towards with player pos and player velocity. Camera tries to look in front of player
         Player player = (Player)GameObject.gameObjects.Find(x => (x is Player));
         Vector2 targetVelocity = player.GetVelocity();
-        Vector2 velocityMultiplier = new Vector2(0.3f, 0.1f);
-
-        Vector2 targetPos = new Vector2(player.rect.x + targetVelocity.X * velocityMultiplier.X, player.rect.y + targetVelocity.Y * velocityMultiplier.Y);
+        Vector2 velocityMultiplier = new Vector2(0.06f * GameObject.scale, 0.02f * GameObject.scale);
+        Vector2 targetPos = new Vector2(player.rect.x + player.rect.width / 2 + targetVelocity.X * velocityMultiplier.X, player.rect.y + targetVelocity.Y * velocityMultiplier.Y);
 
         // Follow player
-        float maxSpeed = 1000f;
+        float maxSpeed = 200 * GameObject.scale;
+        position = new Vector2(SmoothDamp(position.X, targetPos.X, ref velocity.X, 0.03f * GameObject.scale, maxSpeed, Raylib.GetFrameTime()), SmoothDamp(position.Y, targetPos.Y, ref velocity.Y, 0.04f * GameObject.scale, maxSpeed, Raylib.GetFrameTime()));
 
-        position = new Vector2(SmoothDamp(position.X, targetPos.X, ref velocity.X, 0.15f, maxSpeed, Raylib.GetFrameTime()), SmoothDamp(position.Y, targetPos.Y, ref velocity.Y, 0.2f, maxSpeed, Raylib.GetFrameTime()));
-
-        viewPos = new Vector2(-position.X + Raylib.GetScreenWidth() / 2 - player.rect.width / 2, position.Y - Raylib.GetScreenWidth() / 4);
+        viewPos = new Vector2(-position.X + Raylib.GetScreenWidth() / 2, position.Y + player.rect.height * 0.75f - Raylib.GetScreenHeight() / 2);
+    }
+    public static void MoveToPlayer()
+    {
+        Player player = (Player)GameObject.gameObjects.Find(x => (x is Player));
+        position = new Vector2(-player.rect.x + player.rect.width / 2, player.rect.y);
+        velocity = new Vector2();
     }
     static float SmoothDamp(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime) // Stolen from Unity ;()
     {

@@ -12,8 +12,7 @@ public class Enemy : Entity
     }
     protected void FlipXAxis()
     {
-        int xOffset = xOffsetBase + (lookingRight ? -xOffsetDiff : xOffsetDiff);
-
+        int xOffset = xOffsetBase + (lookingRight ? -xOffsetDiff : xOffsetDiff); // invert xoffset to line up texture
         textureOffset = new Vector2(xOffset, yOffset);
     }
     public void Die()

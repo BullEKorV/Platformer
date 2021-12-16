@@ -1,4 +1,7 @@
 Cherry give health
+
+Player
+    Make run animation faster when sprinting
  
 Gem give score
 
@@ -13,14 +16,18 @@ Enemy AI
 
 Level maker
 
-Hold W to look up and S to look down
-
 UI 
     Make buttons look better
         Texture?
+    Stop centering all buttons and instead have the top left at a fixed place
 
 Known issues// (maybe fix)
 Camera go too slow( character out of scene)
+Camera does not function with Gameobject scale
+
+Fix xmovement smooting with scale
+
 Animation framerate is dependent from framerate (slower the fps, slower the animation)
 Really poorly written collision system
     Get's really janky at low fps, starts bumping into stuff etc
+

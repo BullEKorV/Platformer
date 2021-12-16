@@ -1,66 +1,64 @@
 public class Player : Entity
 {
-    protected int hp;
-    int jumpForce = 480;
+    int hp;
+    int jumpForce;
     float highJumpTimer;
     bool highJumpActive;
-    float invisibilityTimer = 0;
+    float invulnerabilityTimer;
     public Player() : base()
     {
-        speed = 50;
+        speed = 12 * scale;
+        jumpForce = 96 * scale;
         hp = 3;
 
         animation = Animation.allAnimations["player-idle"];
 
-        // Define player hitbox
-        Vector2 hitboxSize = new Vector2(75, 105);
-        rect = new Rectangle(120, 100, hitboxSize.X, hitboxSize.Y);
-        // Match texture cord with hitbox
-        textureOffset = new Vector2(-45, 55);
+        Vector2 hitboxSize = new Vector2(15 * scale, 21 * scale); // Define player hitbox
+        rect = new Rectangle(24 * scale, 20 * scale, hitboxSize.X, hitboxSize.Y);
+
+        textureOffset = new Vector2(-9 * scale, 11 * scale); // Give texture an offset to match with hitbox
     }
     public override void Update()
     {
-        base.Update();
+        // Decrease character invisibility timer
+        invulnerabilityTimer -= Raylib.GetFrameTime() * Program.timeScale;
+        invulnerabilityTimer = Math.Max(0, invulnerabilityTimer);
 
-        // Lower character invisibility timer
-        invisibilityTimer -= Raylib.GetFrameTime() * Program.timeScale;
-        invisibilityTimer = Math.Max(0, invisibilityTimer);
-
-        // Lower high jump timer
+        // Decrease high jump timer
         highJumpTimer -= Raylib.GetFrameTime() * Program.timeScale;
         highJumpTimer = Math.Max(0, highJumpTimer);
 
-        float xVelocity = 0;
+        // Calculate x velocity
+        float thisFrameX = 0;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A) && Program.timeScale > 0)
         {
             lookingRight = false;
-            xVelocity -= speed * Program.timeScale;
+            thisFrameX -= speed;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_D) && Program.timeScale > 0)
         {
             lookingRight = true;
-            xVelocity += speed * Program.timeScale;
+            thisFrameX += speed;
         }
         if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
         {
-            xVelocity *= 1.4f;
+            thisFrameX *= 1.6f; // FIX SCALE
         }
-
-        if (Program.timeScale > 0) velocity.X = (velocity.X + xVelocity) * 0.86f;
+        velocity.X += thisFrameX;
 
         // Jump logic
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)
         {
-            highJumpTimer = 0.628f;
+            highJumpTimer = 0.628f; // Perfect for hitting 3 blocks
             highJumpActive = true;
             velocity.Y = jumpForce * Program.timeScale;
             touchingGround = false;
         }
-        // high jump logic
-        if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
+        // High jump logic
+        if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE) || highJumpTimer == 0)
             highJumpActive = false;
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive && highJumpTimer > 0)
-            velocity.Y += 2300 * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale;
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive)
+            velocity.Y += 460 * scale * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale; // Perfect for hitting 3 blocks
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)
@@ -78,6 +76,8 @@ public class Player : Entity
             animation = Animation.allAnimations["player-jump-up"];
         if (velocity.Y < -0)
             animation = Animation.allAnimations["player-jump-down"];
+
+        base.Update(); // 
     }
     void CheckEnemyCollision(Enemy enemy)
     {
@@ -91,10 +91,10 @@ public class Player : Entity
         {
             if (rectVelocity.y >= enemy.rect.y + enemy.rect.height - extraDepth && velocity.Y < 0) // If you come from above enemy dies
             {
-                velocity.Y = 300;
+                velocity.Y = 60 * scale;
                 enemy.Die();
             }
-            else if (invisibilityTimer == 0) // Player take damage
+            else if (invulnerabilityTimer == 0) // Player take damage
             {
                 DamageTaken();
             }
@@ -102,8 +102,8 @@ public class Player : Entity
     }
     public void ResetPos(Vector2 pos)
     {
-        rect.x = pos.X;
-        rect.y = pos.Y;
+        rect.x = pos.X * scale;
+        rect.y = pos.Y * scale;
         velocity.Y = 0;
         velocity.X = 0;
     }
@@ -118,6 +118,6 @@ public class Player : Entity
     void DamageTaken()
     {
         hp--;
-        invisibilityTimer = 3;
+        invulnerabilityTimer = 3; // Make player invu
     }
 }

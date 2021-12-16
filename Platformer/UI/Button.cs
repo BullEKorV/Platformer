@@ -14,28 +14,32 @@ public class Button // IS CALCULATED FROM TOP LEFT
     }
     public void Draw()
     {
-        Raylib.DrawRectangleRec(rect, color);
-        if (isMouseOver) Raylib.DrawRectangleRec(rect, new Color(color.r, color.g, color.b, color.a));
+        // Draw texture and highlight around button
+        DrawTexture();
+        if (isMouseOver) DrawHighlight(Color.WHITE);
+        else DrawHighlight(Color.BLACK);
 
-        int margin = 10;
-        Rectangle tempRect = new Rectangle(rect.x + margin, rect.y + margin, rect.width - margin * 2, rect.height - margin * 2);
-        Raylib.DrawTextRec(Raylib.GetFontDefault(), name, tempRect, 30, 1, true, Color.WHITE);
+        // Draw button text
+        Raylib.DrawText(name, (int)rect.x + (int)rect.width / 2 - Raylib.MeasureText(name, (int)rect.height / 2) / 2, (int)rect.y + Raylib.MeasureText("◯", (int)rect.height / 2), (int)rect.height / 2, Color.WHITE);
     }
     public void Update()
     {
         if (Raylib.GetMouseX() > rect.x && Raylib.GetMouseX() < rect.x + rect.width && Raylib.GetMouseY() > rect.y && Raylib.GetMouseY() < rect.y + rect.height)
-        {
             isMouseOver = true;
-        }
         else
-        {
             isMouseOver = false;
-        }
         if (isMouseOver && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
-        {
-            // Console.WriteLine(action.Method.);
             action.Invoke();
-        }
+    }
+    void DrawTexture() // Later draw texture depending on type of button
+    {
+        Raylib.DrawRectangleRec(rect, color);
+    }
+    void DrawHighlight(Color color)
+    {
+        int lineThickness = (int)rect.height / 22; // Match linethickness with button size
+        Rectangle lineRect = new Rectangle(rect.x - lineThickness, rect.y - lineThickness, rect.width + lineThickness * 2, rect.height + lineThickness * 2); // Get rectangle outside main so it draws around
+        Raylib.DrawRectangleLinesEx(lineRect, lineThickness, color);
     }
     public static void NewGame()
     {

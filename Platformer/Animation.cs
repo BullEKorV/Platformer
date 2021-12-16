@@ -2,8 +2,8 @@ public class Animation
 {
     public static Dictionary<string, Animation> allAnimations = new Dictionary<string, Animation>();
     public List<Texture2D> frames = new List<Texture2D>();
+    public static int framesPerFrame { get; } = 16;
     int totalFrames;
-    int framesPerFrame = 16;
     public Animation(string dir)
     {
         string[] fileArray = Directory.GetFiles(dir);

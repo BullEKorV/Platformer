@@ -4,18 +4,19 @@ public class Opossum : Enemy
     {
         animation = Animation.allAnimations["opossum"];
 
-        pos *= 80;
+        // Gives a starting random frame
+        Random rnd = new Random();
+        currentFrame = rnd.Next(0, animation.frames.Count * Animation.framesPerFrame);
 
         // Define player hitbox
-        Vector2 hitboxSize = new Vector2(130, 70);
+        Vector2 hitboxSize = new Vector2(26 * scale, 14 * scale);
         rect = new Rectangle(pos.X, pos.Y, hitboxSize.X, hitboxSize.Y);
-        // Match texture cord with hitbox
 
-        xOffsetDiff = 15;
-        xOffsetBase = -25;
-        yOffset = 70;
-        int xOffset = -25 + (lookingRight ? -xOffsetDiff : xOffsetDiff);
-
+        // Give texture an offset to match with hitbox
+        xOffsetDiff = 3 * scale;
+        xOffsetBase = -5 * scale;
+        yOffset = 14 * scale;
+        int xOffset = -5 * scale + (lookingRight ? -xOffsetDiff : xOffsetDiff);
         textureOffset = new Vector2(xOffset, yOffset);
     }
     public override void Update()

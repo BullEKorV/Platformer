@@ -5,23 +5,23 @@
             {
                 "name": "New Game",
                 "action": "NewGame",
-                "color": "red",
+                "color": "green",
                 "halfButton": true
             },
             {
                 "name": "Level Select",
                 "action": "LevelSelect",
-                "color": "red"
+                "color": "green"
             },
             {
                 "name": "Create Level",
                 "action": "CreateLevel",
-                "color": "red"
+                "color": "green"
             },
             {
                 "name": "Settings",
                 "action": "Settings",
-                "color": "red"
+                "color": "green"
             },
             {
                 "name": "Exit Game",
@@ -36,7 +36,7 @@
             {
                 "name": "Resume",
                 "action": "Resume",
-                "color": "red"
+                "color": "green"
             },
             {
                 "name": "Main Menu",

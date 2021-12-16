@@ -1,4 +1,5 @@
 ﻿global using System.Numerics;
+global using System.Text.Json;
 global using Raylib_cs;
 class Program
 {
@@ -6,15 +7,15 @@ class Program
     public static float timeScale;
     static void Main(string[] args)
     {
-        Raylib.InitWindow(1280, 720, "Platformer");
-        // Raylib.ToggleFullscreen();
+        Raylib.InitWindow(1920, 1080, "Platformer");
+        Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
-        Raylib.SetExitKey(0);
+        Raylib.SetExitKey(0); // Disable escape to close
 
+        // Load misc stuff
         Animation.LoadAnimationsFromDirectories();
-        Tile.LoadTilesFromDirectory();
-        UI.LoadUIFromJSON();
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
+        Tile.LoadTexturesFromDirectory();
+        UI.LoadScreensFromJSON();
 
         new Player();
 
@@ -31,7 +32,7 @@ class Program
             // Remove dead enemies
             GameObject.gameObjects.RemoveAll(x =>
             {
-                return (x is Entity) ? !((Entity)x).isAlive : false;
+                return (x is Entity) ? !((Entity)x).IsAlive() : false;
             });
 
             // open and close pause menu with escapekey
@@ -50,7 +51,7 @@ class Program
             foreach (GameObject obj in GameObject.gameObjects)
                 if (!(obj is Player)) obj.Draw(); // Draw all except player
 
-            GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
+            if (UI.currentScreen.name == "" || UI.currentScreen.name == "Pause") GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
 
             UI.currentScreen.Draw();
 

@@ -1,4 +1,3 @@
-global using System.Text.Json;
 public class LevelManager
 {
     public static List<Level> allLevels = new List<Level>();
@@ -10,6 +9,7 @@ public class LevelManager
         // Reset player position to start position
         Player player = (Player)GameObject.gameObjects.Find(x => x is Player);
         player.ResetPos(new Vector2(lvl.startPos.x, lvl.startPos.y));
+        Camera.MoveToPlayer(); // Move camera to player immideately
 
         // Load tiles and enemies to gameobjects
         foreach (JsonGameobject tile in lvl.tiles)
@@ -29,11 +29,9 @@ public class LevelManager
     }
     static Level GetLevelJson(int lvl)
     {
-        string root = @"levels\";
+        string[] levelsDir = Directory.GetFiles(@"levels\");
 
-        string[] levelsDir = Directory.GetFiles(root);
-
-        string response = File.ReadAllText(levelsDir[lvl - 1]);
+        string response = File.ReadAllText(levelsDir[lvl - 1]); // Level names start at 1, so therefore -1
 
         Level level = JsonSerializer.Deserialize<Level>(response);
 

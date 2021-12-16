@@ -6,13 +6,13 @@ public class Tile : GameObject
     {
         texture = textures[name];
 
-        Vector2 worldPos = gridPos * 80;
+        Vector2 worldPos = gridPos * 16 * scale;
 
         // Define tile hitbox
-        Vector2 hitboxSize = new Vector2(80, 80);
+        Vector2 hitboxSize = new Vector2(16 * scale, 16 * scale);
         rect = new Rectangle(worldPos.X, worldPos.Y, hitboxSize.X, hitboxSize.Y);
     }
-    public static void LoadTilesFromDirectory()
+    public static void LoadTexturesFromDirectory()
     {
         string root = @"tiles\";
 

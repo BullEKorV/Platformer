@@ -33,7 +33,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
         }
         if (isMouseOver && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
         {
-            Console.WriteLine(action.Method);
+            // Console.WriteLine(action.Method.);
             action.Invoke();
         }
     }
@@ -59,11 +59,13 @@ public class Button // IS CALCULATED FROM TOP LEFT
     }
     public static void MainMenu()
     {
+        LevelManager.ClearLevel();
         UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
     }
-    public static void LoadLevel(string level)
+    public static void LoadLevel(int level)
     {
-
+        LevelManager.LoadLevel(level);
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
     }
     public static void EndApp()
     {

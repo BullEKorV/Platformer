@@ -13,7 +13,6 @@ class Program
 
         Animation.LoadAnimationsFromDirectories();
         Tile.LoadTilesFromDirectory();
-        LevelManager.LoadLevel(1);
         UI.LoadUIFromJSON();
         UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
 

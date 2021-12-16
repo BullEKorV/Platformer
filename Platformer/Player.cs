@@ -23,11 +23,11 @@ public class Player : Entity
         base.Update();
 
         // Lower character invisibility timer
-        invisibilityTimer -= Raylib.GetFrameTime();
+        invisibilityTimer -= Raylib.GetFrameTime() * Program.timeScale;
         invisibilityTimer = Math.Max(0, invisibilityTimer);
 
         // Lower high jump timer
-        highJumpTimer -= Raylib.GetFrameTime();
+        highJumpTimer -= Raylib.GetFrameTime() * Program.timeScale;
         highJumpTimer = Math.Max(0, highJumpTimer);
 
         float xVelocity = 0;
@@ -53,14 +53,14 @@ public class Player : Entity
         {
             highJumpTimer = 0.628f;
             highJumpActive = true;
-            velocity.Y = jumpForce;
+            velocity.Y = jumpForce * Program.timeScale;
             touchingGround = false;
         }
         // high jump logic
         if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE))
             highJumpActive = false;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive && highJumpTimer > 0)
-            velocity.Y += 2300 * highJumpTimer * Raylib.GetFrameTime();
+            velocity.Y += 2300 * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale;
 
         // Check collision with enemies
         foreach (GameObject gameObject in gameObjects)
@@ -99,6 +99,13 @@ public class Player : Entity
                 DamageTaken();
             }
         }
+    }
+    public void ResetPos(Vector2 pos)
+    {
+        rect.x = pos.X;
+        rect.y = pos.Y;
+        velocity.Y = 0;
+        velocity.X = 0;
     }
     public Vector2 GetVelocity()
     {

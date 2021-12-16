@@ -95,15 +95,14 @@ public class UI // IS CALCULATED FROM TOP LEFT
 
             string response = File.ReadAllText(levelsDir[i]);
 
-            string levelName = JsonSerializer.Deserialize<Level>(response).level.ToString();
+            int levelName = JsonSerializer.Deserialize<Level>(response).level;
 
             // add button
-            levelButtons.Add(new Button(levelName, () => Button.LoadLevel(levelName), new Rectangle(x, y, width, width), Color.BLUE));
+            levelButtons.Add(new Button(levelName.ToString(), () => Button.LoadLevel(levelName), new Rectangle(x, y, width, width), Color.BLUE));
 
             x += width + spacing;
             if ((i + 1) % levelsPerRow == 0)
             {
-                Console.WriteLine(i / levelsPerRow);
                 y += width + spacing;
                 x = (Raylib.GetScreenWidth() - (levelsPerRow * width + ((levelsPerRow - 1) * spacing))) / 2;
             }

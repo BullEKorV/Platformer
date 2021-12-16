@@ -1,5 +1,9 @@
 {
     "level": 1,
+    "startPos": {
+        "x": 0,
+        "y": 80
+    },
     "tiles": [
         {
             "type": "grass",

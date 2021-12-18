@@ -1,6 +1,7 @@
 public class Player : Entity
 {
-    int hp;
+    public int hp;
+    public int score;
     int jumpForce;
     float highJumpTimer;
     bool highJumpActive;
@@ -10,6 +11,7 @@ public class Player : Entity
         speed = 12 * scale;
         jumpForce = 96 * scale;
         hp = 3;
+        mass = 1; // Controll gravity
 
         animation = Animation.allAnimations["player-idle"];
 
@@ -60,11 +62,11 @@ public class Player : Entity
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive)
             velocity.Y += 460 * scale * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale; // Perfect for hitting 3 blocks
 
-        // Check collision with enemies
+        // Check collision with entities
         foreach (GameObject gameObject in gameObjects)
         {
-            if (gameObject is Enemy)
-                CheckEnemyCollision((Enemy)gameObject);
+            if (gameObject is Entity)
+                CheckEntityCollision((Entity)gameObject);
         }
 
         // Character animations
@@ -79,24 +81,31 @@ public class Player : Entity
 
         base.Update(); // 
     }
-    void CheckEnemyCollision(Enemy enemy)
+    void CheckEntityCollision(Entity entity)
     {
         int extraDepth = 13;
 
         Rectangle rectVelocity = new Rectangle(rect.x + velocity.X * Raylib.GetFrameTime(), rect.y + velocity.Y * Raylib.GetFrameTime(), rect.width, rect.height); // Maybe better??
 
-        bool isOverlapping = Raylib.CheckCollisionRecs(rectVelocity, enemy.rect);
+        bool isOverlapping = Raylib.CheckCollisionRecs(rectVelocity, entity.rect);
 
         if (isOverlapping)
         {
-            if (rectVelocity.y >= enemy.rect.y + enemy.rect.height - extraDepth && velocity.Y < 0) // If you come from above enemy dies
+            if (entity is (Enemy))
             {
-                velocity.Y = 60 * scale;
-                enemy.Die();
+                if (rectVelocity.y >= entity.rect.y + entity.rect.height - extraDepth && velocity.Y < 0) // If you come from above enemy dies
+                {
+                    velocity.Y = 60 * scale;
+                    entity.OnCollision();
+                }
+                else if (invulnerabilityTimer == 0) // Player take damage
+                {
+                    DamageTaken();
+                }
             }
-            else if (invulnerabilityTimer == 0) // Player take damage
+            else if (entity is Collectible)
             {
-                DamageTaken();
+                entity.OnCollision();
             }
         }
     }
@@ -118,6 +127,6 @@ public class Player : Entity
     void DamageTaken()
     {
         hp--;
-        invulnerabilityTimer = 3; // Make player invu
+        invulnerabilityTimer = 1.2f; // Make player invu
     }
 }

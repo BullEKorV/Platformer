@@ -2,15 +2,18 @@ public class Opossum : Enemy
 {
     public Opossum(Vector2 pos) : base()
     {
+        speed = 30;
+        mass = 1; // Controll gravity
+
         animation = Animation.allAnimations["opossum"];
 
         // Gives a starting random frame
         Random rnd = new Random();
         currentFrame = rnd.Next(0, animation.frames.Count * Animation.framesPerFrame);
 
-        // Define player hitbox
+        // Define opossum hitbox
         Vector2 hitboxSize = new Vector2(26 * scale, 14 * scale);
-        rect = new Rectangle(pos.X, pos.Y, hitboxSize.X, hitboxSize.Y);
+        rect = new Rectangle(pos.X * 16 * scale, pos.Y * 16 * scale, hitboxSize.X, hitboxSize.Y);
 
         // Give texture an offset to match with hitbox
         xOffsetDiff = 3 * scale;

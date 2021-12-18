@@ -15,8 +15,8 @@ class Program
         // Load misc stuff
         Animation.LoadAnimationsFromDirectories();
         Tile.LoadTexturesFromDirectory();
-        UI.LoadScreensFromJSON();
 
+        new UI();
         new Player();
 
         while (!Raylib.WindowShouldClose() && !windowShouldClose)
@@ -53,7 +53,8 @@ class Program
 
             if (UI.currentScreen.name == "" || UI.currentScreen.name == "Pause") GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
 
-            UI.currentScreen.Draw();
+            UI.Draw(); // Draw UI elements (player hearts etc)
+            UI.currentScreen.Draw(); // Draw current screen
 
             Raylib.EndDrawing();
         }

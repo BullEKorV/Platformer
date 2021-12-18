@@ -21,11 +21,20 @@ public class LevelManager
             if (enemy.type == "opossum")
                 new Opossum(new Vector2(enemy.x, enemy.y));
         }
+        foreach (JsonGameobject collectible in lvl.collectibles)
+        {
+            if (collectible.type == "cherry")
+                new Cherry(new Vector2(collectible.x, collectible.y));
+            if (collectible.type == "gem")
+                new Gem(new Vector2(collectible.x, collectible.y));
+
+        }
     }
     public static void ClearLevel()
     {
         GameObject.gameObjects.RemoveAll(x => (x is Tile));
         GameObject.gameObjects.RemoveAll(x => (x is Enemy));
+        GameObject.gameObjects.RemoveAll(x => (x is Collectible));
     }
     static Level GetLevelJson(int lvl)
     {
@@ -45,6 +54,8 @@ public class Level
     public StartPos startPos { get; set; }
     public List<JsonGameobject> tiles { get; set; }
     public List<JsonGameobject> enemies { get; set; }
+    public List<JsonGameobject> collectibles { get; set; }
+
 }
 public class JsonGameobject
 {

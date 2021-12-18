@@ -15,8 +15,10 @@ public class Enemy : Entity
         int xOffset = xOffsetBase + (lookingRight ? -xOffsetDiff : xOffsetDiff); // invert xoffset to line up texture
         textureOffset = new Vector2(xOffset, yOffset);
     }
-    public void Die()
+    public override void OnCollision()
     {
+        Player player = (Player)gameObjects.Find(x => x is (Player));
+        player.score += 5;
         isAlive = false;
     }
 }

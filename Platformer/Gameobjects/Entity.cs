@@ -4,6 +4,7 @@ public class Entity : GameObject
     protected Animation animation;
     protected Vector2 velocity;
     protected int speed;
+    protected int mass;
     protected bool touchingGround;
     protected int currentFrame;
     public Entity() : base()
@@ -13,12 +14,12 @@ public class Entity : GameObject
     {
         base.Update();
 
-        velocity.Y -= 260 * scale * Raylib.GetFrameTime() * Program.timeScale; // Gravity 
+        velocity.Y -= 260 * scale * mass * Raylib.GetFrameTime() * Program.timeScale; // Gravity 
         if (Program.timeScale > 0) velocity.X *= 0.86f; // Constrain xvelocity  FIX SCALE
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
-            if (gameobject is Tile)
+            if (gameobject is Tile && mass > 0)
                 CheckCollisionTile(gameobject.rect);
 
         // Update velocity
@@ -59,6 +60,9 @@ public class Entity : GameObject
             velocity.Y = 0;
             if (this is (Player)) ((Player)this).DisableHighJump(); // Disable high jump if touching ceiling
         }
+    }
+    public virtual void OnCollision()
+    {
     }
     public bool IsAlive()
     {

@@ -57,6 +57,17 @@
         ]
     },
     {
+        "name": "Object Select",
+        "buttons": [
+            {
+                "name": "Close",
+                "action": "Resume",
+                "color": "red",
+                "bottomPlacement": true
+            }
+        ]
+    },
+    {
         "name": "Settings",
         "buttons": [
             {

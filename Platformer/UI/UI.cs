@@ -13,15 +13,15 @@ public class UI // IS CALCULATED FROM TOP LEFT
     }
     public static void Draw()
     {
-        Player player = (Player)GameObject.gameObjects.Find(x => x is Player);
-        for (var i = 0; i < player.hp; i++)
-        {
-            Raylib.DrawRectangle(i * 80, 0, 20, 20, Color.RED);
-        }
-        string scoreText = "Score: " + player.score.ToString();
-        int margin = Raylib.GetScreenHeight() / 54;
-        int fontSize = Raylib.GetScreenHeight() / 21;
-        Raylib.DrawText(scoreText, Raylib.GetScreenWidth() - Raylib.MeasureText(scoreText, fontSize) - margin, margin, fontSize, Color.BLACK);
+        // Player player = (Player)GameObject.gameObjects.Find(x => x is Player);
+        // for (var i = 0; i < player.hp; i++)
+        // {
+        // Raylib.DrawRectangle(i * 80, 0, 20, 20, Color.RED);
+        // }
+        // string scoreText = "Score: " + player.score.ToString();
+        // int margin = Raylib.GetScreenHeight() / 54;
+        // int fontSize = Raylib.GetScreenHeight() / 21;
+        // Raylib.DrawText(scoreText, Raylib.GetScreenWidth() - Raylib.MeasureText(scoreText, fontSize) - margin, margin, fontSize, Color.BLACK);
 
         // Make background darker
         if (currentScreen.name == "Pause") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 175));

@@ -23,6 +23,11 @@ public class Camera
         position = new Vector2(-player.rect.x + player.rect.width / 2, player.rect.y);
         velocity = new Vector2();
     }
+    public static void MoveToCords(Vector2 cords)
+    {
+        velocity = new Vector2();
+        position = cords;
+    }
     static float SmoothDamp(float current, float target, ref float currentVelocity, float smoothTime, float maxSpeed, float deltaTime) // Stolen from Unity ;()
     {
         // Based on Game Programming Gems 4 Chapter 1.10

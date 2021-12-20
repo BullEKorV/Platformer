@@ -56,6 +56,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public static void CreateLevel()
     {
         UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        Createmode.StartCreatemode();
     }
     public static void Settings()
     {
@@ -70,6 +71,10 @@ public class Button // IS CALCULATED FROM TOP LEFT
     {
         LevelManager.LoadLevel(level);
         UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+    }
+    public static void SelectTile(string tile)
+    {
+        Createmode.tile = tile;
     }
     public static void EndApp()
     {

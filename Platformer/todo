@@ -7,6 +7,7 @@ Gem give score
 
 Camera 
     Silent box? Can move a little without camera following
+    Refactoring
 
 Enemy AI
     Move til hit object?

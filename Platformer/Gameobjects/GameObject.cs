@@ -17,7 +17,7 @@ public class GameObject
     {
         Rectangle flippedRect = FlipYAxis(rect); // Flip rectangle on the y axis
 
-        // Raylib.DrawRectangleRec(new Rectangle(flippedRect.x + Camera.viewPos.X, flippedRect.y + Camera.viewPos.Y, flippedRect.width, flippedRect.height), Color.GOLD); // Draw hitboxes
+        Raylib.DrawRectangleRec(new Rectangle(flippedRect.x + Camera.viewPos.X, flippedRect.y + Camera.viewPos.Y, flippedRect.width, flippedRect.height), Color.GOLD); // Draw hitboxes
 
         DrawTexture(texture, new Vector2(flippedRect.x + textureOffset.X + Camera.viewPos.X, flippedRect.y - textureOffset.Y + Camera.viewPos.Y), scale, lookingRight); // Draw textures
     }

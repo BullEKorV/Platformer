@@ -9,6 +9,11 @@ public class Screen
     }
     public void Update()
     {
+        Console.WriteLine(buttons.Count);
+        // open and close pause menu with escapekey
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Pause");
+        else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "Pause") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+
         foreach (Button butt in buttons) // Update all the button presses etc
             butt.Update();
     }
@@ -62,6 +67,7 @@ public class Screen
             }
             // Fetch levels if level select menu
             if (screen.name == "Level Select") tempButtons.AddRange(LoadLevelsToButtons());
+            if (screen.name == "Object Select") tempButtons.AddRange(LoadTilesToButtons());
 
             screens.Add(new Screen(screen.name, tempButtons));
         }
@@ -100,6 +106,41 @@ public class Screen
             }
         }
         return levelButtons;
+    }
+    public static List<Button> LoadTilesToButtons()
+    {
+        List<Button> tilesButtons = new List<Button>();
+
+        string[] tilesDir = Directory.GetFiles(@"tiles\"); // Get all level filenames and reoders because C# thinks 10 comes before 2
+
+        // Bunch of determening variables for button placement
+        int width = (int)(Raylib.GetScreenWidth() / 15f);
+        int spacing = (int)(Raylib.GetScreenHeight() / 25);
+        const int levelsPerRow = 6;
+        int rowAmounts = (int)Math.Ceiling((double)tilesDir.Length / levelsPerRow);
+        int x = (Raylib.GetScreenWidth() - (levelsPerRow * width + ((levelsPerRow - 1) * spacing))) / 2;
+        int y = (Raylib.GetScreenHeight() - (rowAmounts * width + ((rowAmounts - 1) * spacing))) / 2;
+
+        for (int i = 0; i < tilesDir.Length; i++)
+        {
+            // Find levelname by reading levelJSON and deserializing it
+            string tileName = tilesDir[i].Remove(0, 6);
+            tileName = tileName.Substring(0, tileName.Length - 4);
+
+            // Give a nice offcenter to last row if it isn't full
+            if (levelsPerRow * rowAmounts % tilesDir.Length != 0 && i == levelsPerRow * (rowAmounts - 1))
+                x = (Raylib.GetScreenWidth() - ((tilesDir.Length - i) * width + ((tilesDir.Length - i - 1) * spacing))) / 2;
+
+            tilesButtons.Add(new Button(tileName, () => Button.SelectTile(tileName), new Rectangle(x, y, width, width), Color.BLUE));
+
+            x += width + spacing; // Move x for next button
+            if ((i + 1) % levelsPerRow == 0) // Checks for if a row has been filled
+            {
+                y += width + spacing; // Moves down y
+                x = (Raylib.GetScreenWidth() - (levelsPerRow * width + ((levelsPerRow - 1) * spacing))) / 2; // Resets x
+            }
+        }
+        return tilesButtons;
     }
 }
 class ScreenJSON

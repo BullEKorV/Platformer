@@ -7,8 +7,8 @@ class Program
     public static float timeScale;
     static void Main(string[] args)
     {
-        Raylib.InitWindow(1920, 1080, "Platformer");
-        Raylib.ToggleFullscreen();
+        Raylib.InitWindow(1280, 720, "Platformer");
+        // Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
         Raylib.SetExitKey(0); // Disable escape to close
 
@@ -21,7 +21,7 @@ class Program
 
         while (!Raylib.WindowShouldClose() && !windowShouldClose)
         {
-            if (timeScale > 0) Camera.Update();
+            if (timeScale > 0) Camera.Update(); // Update camera pos
 
             foreach (GameObject obj in GameObject.gameObjects)
                 obj.Update();
@@ -29,15 +29,13 @@ class Program
             // UI button presses etc.
             UI.currentScreen.Update();
 
+            if (Createmode.isActive) Createmode.Update();
+
             // Remove dead enemies
             GameObject.gameObjects.RemoveAll(x =>
             {
                 return (x is Entity) ? !((Entity)x).IsAlive() : false;
             });
-
-            // open and close pause menu with escapekey
-            if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && UI.currentScreen.name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Pause");
-            else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && UI.currentScreen.name == "Pause") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
 
             // Freeze time if not in play mode 
             if (UI.currentScreen.name == "")
@@ -51,7 +49,7 @@ class Program
             foreach (GameObject obj in GameObject.gameObjects)
                 if (!(obj is Player)) obj.Draw(); // Draw all except player
 
-            if (UI.currentScreen.name == "" || UI.currentScreen.name == "Pause") GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
+            if ((UI.currentScreen.name == "" || UI.currentScreen.name == "Pause") && !Createmode.isActive) GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
 
             UI.Draw(); // Draw UI elements (player hearts etc)
             UI.currentScreen.Draw(); // Draw current screen

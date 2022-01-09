@@ -2,7 +2,7 @@ public class Animation
 {
     public static Dictionary<string, Animation> allAnimations = new Dictionary<string, Animation>();
     public List<Texture2D> frames = new List<Texture2D>();
-    public static int framesPerFrame { get; } = 16;
+    public static readonly int framesPerFrame = 16;
     int totalFrames;
     public Animation(string dir)
     {

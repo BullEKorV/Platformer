@@ -9,7 +9,7 @@ public class Screen
     }
     public void Update()
     {
-        Console.WriteLine(buttons.Count);
+        // Console.WriteLine(buttons.Count);
         // open and close pause menu with escapekey
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Pause");
         else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "Pause") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
@@ -60,7 +60,7 @@ public class Screen
                 if (button.halfButton || lastButtonHalf) buttonWidth = buttonWidth / 2 - buttonSpacing / 2;
                 if (lastButtonHalf) tempX += buttonWidth + buttonSpacing;
 
-                tempButtons.Add(new Button(button.name, button.actions, new Rectangle(tempX, tempY, buttonWidth, buttonHeight), button.colors));
+                tempButtons.Add(new Button(button.name, button.actions, new Rectangle(tempX, tempY, buttonWidth, buttonHeight), button.colors, new Texture2D()));
                 if (!button.halfButton) y += buttonHeight + buttonSpacing; // Increase Y if this button is not a halfbutton
 
                 lastButtonHalf = button.halfButton;
@@ -96,7 +96,7 @@ public class Screen
             if (levelsPerRow * rowAmounts % levelsDir.Length != 0 && i == levelsPerRow * (rowAmounts - 1))
                 x = (Raylib.GetScreenWidth() - ((levelsDir.Length - i) * width + ((levelsDir.Length - i - 1) * spacing))) / 2;
 
-            levelButtons.Add(new Button(levelName.ToString(), () => Button.LoadLevel(levelName), new Rectangle(x, y, width, width), Color.BLUE));
+            levelButtons.Add(new Button(levelName.ToString(), () => Button.LoadLevel(levelName), new Rectangle(x, y, width, width), Color.BLUE, new Texture2D()));
 
             x += width + spacing; // Move x for next button
             if ((i + 1) % levelsPerRow == 0) // Checks for if a row has been filled
@@ -131,7 +131,7 @@ public class Screen
             if (levelsPerRow * rowAmounts % tilesDir.Length != 0 && i == levelsPerRow * (rowAmounts - 1))
                 x = (Raylib.GetScreenWidth() - ((tilesDir.Length - i) * width + ((tilesDir.Length - i - 1) * spacing))) / 2;
 
-            tilesButtons.Add(new Button(tileName, () => Button.SelectTile(tileName), new Rectangle(x, y, width, width), Color.BLUE));
+            tilesButtons.Add(new Button(tileName, () => Button.SelectTile(tileName), new Rectangle(x, y, width, width), Color.BLUE, Tile.textures[tileName]));
 
             x += width + spacing; // Move x for next button
             if ((i + 1) % levelsPerRow == 0) // Checks for if a row has been filled

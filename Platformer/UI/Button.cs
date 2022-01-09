@@ -5,12 +5,14 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public Rectangle rect;
     public Color color = Color.BLUE;
     private bool isMouseOver = false;
-    public Button(string name, Action action, Rectangle rect, Color color)
+    public Texture2D texture;
+    public Button(string name, Action action, Rectangle rect, Color color, Texture2D texture)
     {
         this.name = name;
         this.action = action;
         this.rect = rect;
         this.color = color;
+        this.texture = texture;
     }
     public void Draw()
     {
@@ -34,6 +36,11 @@ public class Button // IS CALCULATED FROM TOP LEFT
     void DrawTexture() // Later draw texture depending on type of button
     {
         Raylib.DrawRectangleRec(rect, color);
+
+        Vector2 size = new Vector2(texture.width, texture.height);
+        Rectangle sourceRec = new Rectangle(0, 0, size.X, size.Y);
+        Rectangle destRec = new Rectangle(rect.x, rect.y, rect.width, rect.height);
+        Raylib.DrawTexturePro(texture, sourceRec, destRec, new Vector2(0, 0), 0, Color.WHITE);
     }
     void DrawHighlight(Color color)
     {
@@ -48,6 +55,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public static void Resume()
     {
         UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+
     }
     public static void LevelSelect()
     {
@@ -66,6 +74,8 @@ public class Button // IS CALCULATED FROM TOP LEFT
     {
         LevelManager.ClearLevel();
         UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
+
+        Createmode.EndCreatemode();
     }
     public static void LoadLevel(int level)
     {
@@ -75,6 +85,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public static void SelectTile(string tile)
     {
         Createmode.tile = tile;
+        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
     }
     public static void EndApp()
     {

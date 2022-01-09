@@ -24,7 +24,7 @@ public class UI // IS CALCULATED FROM TOP LEFT
         // Raylib.DrawText(scoreText, Raylib.GetScreenWidth() - Raylib.MeasureText(scoreText, fontSize) - margin, margin, fontSize, Color.BLACK);
 
         // Make background darker
-        if (currentScreen.name == "Pause") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 175));
+        if (currentScreen.name == "Pause" || currentScreen.name == "Object Select") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 175));
         else if (currentScreen.name != "") Raylib.ClearBackground(Color.SKYBLUE);
 
         // Raylib.DrawLine(0, Raylib.GetScreenHeight() / 2, Raylib.GetScreenWidth(), Raylib.GetScreenHeight() / 2, Color.BLUE); // center line

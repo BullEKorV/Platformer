@@ -1,10 +1,6 @@
-Cherry give health
-
 Player
     Make run animation faster when sprinting
  
-Gem give score
-
 Camera 
     Silent box? Can move a little without camera following
     Refactoring
@@ -18,13 +14,14 @@ Enemy AI
 Level maker
 
 UI 
-    Make buttons look better
-        Texture?
-    Stop centering all buttons and instead have the top left at a fixed place
+    Smarter system
+    Loads of Refactoring
+    Like a "branch system" 
+        Always close active UI when pressing escape
+        No manual coding
 
 Known issues// (maybe fix)
 Camera go too slow( character out of scene)
-Camera does not function with Gameobject scale
 
 Fix xmovement smooting with scale
 

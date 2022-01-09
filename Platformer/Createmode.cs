@@ -7,7 +7,7 @@ public class Createmode
     public static string tile;
     public static void Update()
     {
-        if (Raylib.IsMouseButtonReleased(MouseButton.MOUSE_LEFT_BUTTON) || Raylib.IsKeyReleased(KeyboardKey.KEY_E)) allowPlacing = true; // Make sure you dont automatically place blocks
+        if (Raylib.IsMouseButtonReleased(MouseButton.MOUSE_LEFT_BUTTON) || Raylib.IsMouseButtonReleased(MouseButton.MOUSE_RIGHT_BUTTON) || Raylib.IsKeyReleased(KeyboardKey.KEY_E) || Raylib.IsKeyReleased(KeyboardKey.KEY_ESCAPE)) allowPlacing = true; // Make sure you dont automatically place blocks
 
         Console.WriteLine(GameObject.gameObjects.Count);
         // Update pos
@@ -23,7 +23,7 @@ public class Createmode
 
         // Open and close inventory
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) && UI.currentScreen.name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Object Select");
-        else if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) && UI.currentScreen.name == "Object Select") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        else if ((Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) && UI.currentScreen.name == "Object Select") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
 
         // Only allow placing in resume mode
         if (UI.currentScreen.name != "") allowPlacing = false;
@@ -31,23 +31,22 @@ public class Createmode
         Vector2 rectPos = ConvertToGrid(Raylib.GetMousePosition(), pos);
         temp.rect = new Rectangle(rectPos.X, -rectPos.Y, 16 * GameObject.scale, 16 * GameObject.scale);
         // Console.WriteLine(temp.rect.x);
+        if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON) && allowPlacing)
+            PlaceTile();
         if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && allowPlacing)
-        {
-            RemoveExistingTile();
-            new Tile(new Vector2(temp.rect.x / (16 * GameObject.scale), temp.rect.y / (16 * GameObject.scale)), tile);
-        }
+            DeleteTileAtMarker();
+
     }
-    private static void RemoveExistingTile()
+    private static void PlaceTile()
+    {
+        DeleteTileAtMarker();
+        new Tile(new Vector2(temp.rect.x / (16 * GameObject.scale), temp.rect.y / (16 * GameObject.scale)), tile);
+    }
+    private static void DeleteTileAtMarker()
     {
         List<GameObject> sameXPos = GameObject.gameObjects.FindAll(x => x.rect.x == temp.rect.x);
         sameXPos.Remove(temp);
-        // Console.WriteLine(gameObject.Count);
         GameObject.gameObjects.Remove(sameXPos.Find(y => y.rect.y == temp.rect.y));
-
-        // bool alreadyPlaced = gameObject.Any();
-        // if (alreadyPlaced) return false;
-        // if (!allowPlacing) return false;
-        // return true;
     }
     private static Vector2 ConvertToGrid(Vector2 mousePos, Vector2 cameraPos)
     {

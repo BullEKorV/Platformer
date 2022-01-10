@@ -3,6 +3,7 @@ public class Gem : Collectible
     public Gem(Vector2 pos) : base()
     {
         animation = Animation.allAnimations["gem"];
+        id = "gem";
 
         // Gives a starting random frame
         Random rnd = new Random();

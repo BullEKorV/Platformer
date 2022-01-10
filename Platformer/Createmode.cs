@@ -9,7 +9,7 @@ public class Createmode
     {
         if (Raylib.IsMouseButtonReleased(MouseButton.MOUSE_LEFT_BUTTON) || Raylib.IsMouseButtonReleased(MouseButton.MOUSE_RIGHT_BUTTON) || Raylib.IsKeyReleased(KeyboardKey.KEY_E) || Raylib.IsKeyReleased(KeyboardKey.KEY_ESCAPE)) allowPlacing = true; // Make sure you dont automatically place blocks
 
-        Console.WriteLine(GameObject.gameObjects.Count);
+        // Console.WriteLine(GameObject.gameObjects.Count);
         // Update pos
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
             pos.X -= 2 * Program.timeScale;
@@ -31,22 +31,39 @@ public class Createmode
         Vector2 rectPos = ConvertToGrid(Raylib.GetMousePosition(), pos);
         temp.rect = new Rectangle(rectPos.X, -rectPos.Y, 16 * GameObject.scale, 16 * GameObject.scale);
         // Console.WriteLine(temp.rect.x);
-        if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON) && allowPlacing)
-            PlaceTile();
         if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON) && allowPlacing)
+            PlaceTile();
+        if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON) && allowPlacing)
             DeleteTileAtMarker();
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_F))
+            LevelManager.SaveLevel();
 
     }
     private static void PlaceTile()
     {
+        if (tile == "player")
+            DeleteAlreadyExistingPlayer();
         DeleteTileAtMarker();
-        new Tile(new Vector2(temp.rect.x / (16 * GameObject.scale), temp.rect.y / (16 * GameObject.scale)), tile);
+
+        List<GameObject> sameXPos = GameObject.gameObjects.FindAll(x => x.rect.x == temp.rect.x);
+        sameXPos.Remove(temp);
+        GameObject existingTile = sameXPos.Find(y => y.rect.y == temp.rect.y);
+        if ((existingTile != null && existingTile.id != "player") || existingTile == null)
+            new Tile(new Vector2(temp.rect.x / (16 * GameObject.scale), temp.rect.y / (16 * GameObject.scale)), tile);
+    }
+    private static void DeleteAlreadyExistingPlayer()
+    {
+        List<GameObject> players = GameObject.gameObjects.FindAll(x => x.id == "player");
+        players.Remove((GameObject.gameObjects.Find(x => x is Player)));
+
+        if (players.Count > 0) GameObject.gameObjects.Remove(players[0]);
     }
     private static void DeleteTileAtMarker()
     {
         List<GameObject> sameXPos = GameObject.gameObjects.FindAll(x => x.rect.x == temp.rect.x);
         sameXPos.Remove(temp);
-        GameObject.gameObjects.Remove(sameXPos.Find(y => y.rect.y == temp.rect.y));
+        GameObject existingTile = sameXPos.Find(y => y.rect.y == temp.rect.y);
+        if (existingTile != null && existingTile.id != "player") GameObject.gameObjects.Remove(existingTile);
     }
     private static Vector2 ConvertToGrid(Vector2 mousePos, Vector2 cameraPos)
     {
@@ -68,6 +85,7 @@ public class Createmode
         temp = new Tile(new Vector2(), "selector");
         allowPlacing = false;
         tile = "grass";
+        new Tile(new Vector2(0, 0), "player"); // create player automatically
     }
     public static void EndCreatemode()
     {

@@ -6,6 +6,8 @@ public class Tile : GameObject
     {
         texture = textures[name];
 
+        id = name;
+
         Vector2 worldPos = gridPos * 16 * scale;
 
         // Define tile hitbox

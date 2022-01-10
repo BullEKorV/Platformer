@@ -3,6 +3,7 @@ public class Cherry : Collectible
     public Cherry(Vector2 pos) : base()
     {
         animation = Animation.allAnimations["cherry"];
+        id = "cherry";
 
         // Gives a starting random frame
         Random rnd = new Random();

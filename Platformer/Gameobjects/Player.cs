@@ -12,6 +12,7 @@ public class Player : Entity
         jumpForce = 96 * scale;
         hp = 3;
         mass = 1; // Controll gravity
+        id = "player";
 
         animation = Animation.allAnimations["player-idle"];
 
@@ -111,8 +112,8 @@ public class Player : Entity
     }
     public void ResetPos(Vector2 pos)
     {
-        rect.x = pos.X * scale;
-        rect.y = pos.Y * scale;
+        rect.x = pos.X * scale * 16;
+        rect.y = pos.Y * scale * 16;
         velocity.Y = 0;
         velocity.X = 0;
     }

@@ -5,6 +5,7 @@ public class LevelManager
     {
         ClearLevel();
         Level lvl = GetLevelJson(level);
+        Console.WriteLine(lvl.level);
 
         // Reset player position to start position
         Player player = (Player)GameObject.gameObjects.Find(x => x is Player);
@@ -12,21 +13,15 @@ public class LevelManager
         Camera.MoveToPlayer(); // Move camera to player immideately
 
         // Load tiles and enemies to gameobjects
-        foreach (JsonGameobject tile in lvl.tiles)
+        foreach (JsonGameobject gameobject in lvl.gameobjects)
         {
-            new Tile(new Vector2(tile.x, tile.y), tile.type);
-        }
-        foreach (JsonGameobject enemy in lvl.enemies)
-        {
-            if (enemy.type == "opossum")
-                new Opossum(new Vector2(enemy.x, enemy.y));
-        }
-        foreach (JsonGameobject collectible in lvl.collectibles)
-        {
-            if (collectible.type == "cherry")
-                new Cherry(new Vector2(collectible.x, collectible.y));
-            if (collectible.type == "gem")
-                new Gem(new Vector2(collectible.x, collectible.y));
+            if (gameobject.type == "opossum")
+                new Opossum(new Vector2(gameobject.x, gameobject.y));
+            else if (gameobject.type == "cherry")
+                new Cherry(new Vector2(gameobject.x, gameobject.y));
+            else if (gameobject.type == "gem")
+                new Gem(new Vector2(gameobject.x, gameobject.y));
+            else new Tile(new Vector2(gameobject.x, gameobject.y), gameobject.type);
 
         }
     }
@@ -36,11 +31,41 @@ public class LevelManager
         GameObject.gameObjects.RemoveAll(x => (x is Enemy));
         GameObject.gameObjects.RemoveAll(x => (x is Collectible));
     }
+    public static void SaveLevel()
+    {
+        List<GameObject> allGameobjects = GameObject.gameObjects;
+
+        List<JsonGameobject> jsonObjects = new List<JsonGameobject>();
+        foreach (GameObject gameObject in allGameobjects)
+        {
+            if (gameObject.id == "selector" || gameObject.id == "player") continue;
+            jsonObjects.Add(new JsonGameobject(gameObject.id, (int)gameObject.rect.x / 16 / GameObject.scale, (int)gameObject.rect.y / 16 / GameObject.scale));
+        }
+        int totalLevels = Directory.GetFiles(@"levels\").Length;
+
+        List<GameObject> players = allGameobjects.FindAll(x => x.id == "player");
+        GameObject player = players.Find(x => x is not Player);
+        StartPos startPos = new StartPos(); // Player startpos
+        startPos.x = (int)(player.rect.x / 16 / GameObject.scale);
+        startPos.y = (int)(player.rect.y / 16 / GameObject.scale); // MAKE IT CHANGE!!!!
+
+        Level newLevel = new Level();
+        newLevel.gameobjects = jsonObjects;
+        // newLevel.enemies = enemies;
+        // newLevel.collectibles = collectibles;
+        newLevel.level = totalLevels + 1; // Set level name
+        newLevel.startPos = startPos;
+
+        string jsonString = JsonSerializer.Serialize<Level>(newLevel);
+
+        string filePath = @"levels\" + (totalLevels + 1 + ".json");
+        File.Create(filePath).Dispose();
+
+        File.WriteAllText(filePath, jsonString);
+    }
     static Level GetLevelJson(int lvl)
     {
-        string[] levelsDir = Directory.GetFiles(@"levels\");
-
-        string response = File.ReadAllText(levelsDir[lvl - 1]); // Level names start at 1, so therefore -1
+        string response = File.ReadAllText(@"levels\" + lvl + ".json"); // Level names start at 1, so therefore -1
 
         Level level = JsonSerializer.Deserialize<Level>(response);
 
@@ -52,13 +77,16 @@ public class Level
 {
     public int level { get; set; }
     public StartPos startPos { get; set; }
-    public List<JsonGameobject> tiles { get; set; }
-    public List<JsonGameobject> enemies { get; set; }
-    public List<JsonGameobject> collectibles { get; set; }
-
+    public List<JsonGameobject> gameobjects { get; set; }
 }
 public class JsonGameobject
 {
+    public JsonGameobject(string type, int x, int y)
+    {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+    }
     public string type { get; set; }
     public int x { get; set; }
     public int y { get; set; }
@@ -67,5 +95,4 @@ public class StartPos
 {
     public int x { get; set; }
     public int y { get; set; }
-
 }

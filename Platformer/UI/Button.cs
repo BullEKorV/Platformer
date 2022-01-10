@@ -6,6 +6,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public Color color = Color.BLUE;
     private bool isMouseOver = false;
     public Texture2D texture;
+    public bool drawText = true;
     public Button(string name, Action action, Rectangle rect, Color color, Texture2D texture)
     {
         this.name = name;
@@ -22,7 +23,8 @@ public class Button // IS CALCULATED FROM TOP LEFT
         else DrawHighlight(Color.BLACK);
 
         // Draw button text
-        Raylib.DrawText(name, (int)rect.x + (int)rect.width / 2 - Raylib.MeasureText(name, (int)rect.height / 2) / 2, (int)rect.y + Raylib.MeasureText("◯", (int)rect.height / 2), (int)rect.height / 2, Color.WHITE);
+        // Console.WriteLine(action.GetType());
+        if (drawText) Raylib.DrawText(name, (int)rect.x + (int)rect.width / 2 - Raylib.MeasureText(name, (int)rect.height / 2) / 2, (int)rect.y + Raylib.MeasureText("◯", (int)rect.height / 2), (int)rect.height / 2, Color.WHITE);
     }
     public void Update()
     {
@@ -60,6 +62,7 @@ public class Button // IS CALCULATED FROM TOP LEFT
     public static void LevelSelect()
     {
         UI.currentScreen = UI.allScreens.Find(x => x.name == "Level Select");
+        Screen.ReloadLevelsToButtons();
     }
     public static void CreateLevel()
     {

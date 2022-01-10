@@ -4,6 +4,7 @@ public class Opossum : Enemy
     {
         speed = 30;
         mass = 1; // Controll gravity
+        id = "opossum";
 
         animation = Animation.allAnimations["opossum"];
 

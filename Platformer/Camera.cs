@@ -20,7 +20,7 @@ public class Camera
     public static void MoveToPlayer()
     {
         Player player = (Player)GameObject.gameObjects.Find(x => (x is Player));
-        position = new Vector2(-player.rect.x + player.rect.width / 2, player.rect.y);
+        position = new Vector2(player.rect.x + player.rect.width / 2, player.rect.y);
         velocity = new Vector2();
     }
     public static void MoveToCords(Vector2 cords)

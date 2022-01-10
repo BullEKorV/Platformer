@@ -73,6 +73,21 @@ public class Screen
         }
         return screens;
     }
+    public static void ReloadLevelsToButtons()
+    {
+        Screen levelSelect = UI.allScreens.Find(x => x.name == "Level Select");
+
+        for (int i = 0; i < levelSelect.buttons.Count; i++)
+        {
+            if (levelSelect.buttons[i].action != Button.MainMenu)
+            {
+                levelSelect.buttons.RemoveAt(i);
+                i--;
+            }
+        }
+
+        levelSelect.buttons.AddRange(LoadLevelsToButtons());
+    }
     public static List<Button> LoadLevelsToButtons()
     {
         List<Button> levelButtons = new List<Button>();
@@ -132,6 +147,7 @@ public class Screen
                 x = (Raylib.GetScreenWidth() - ((tilesDir.Length - i) * width + ((tilesDir.Length - i - 1) * spacing))) / 2;
 
             tilesButtons.Add(new Button(tileName, () => Button.SelectTile(tileName), new Rectangle(x, y, width, width), Color.BLUE, Tile.textures[tileName]));
+            tilesButtons.Last().drawText = false;
 
             x += width + spacing; // Move x for next button
             if ((i + 1) % levelsPerRow == 0) // Checks for if a row has been filled

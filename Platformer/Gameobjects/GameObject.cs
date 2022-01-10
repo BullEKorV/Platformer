@@ -6,6 +6,7 @@ public class GameObject
     protected Texture2D texture;
     protected Vector2 textureOffset;
     protected bool lookingRight = true;
+    public string id;
     public GameObject()
     {
         gameObjects.Add(this);
@@ -19,7 +20,8 @@ public class GameObject
 
         Raylib.DrawRectangleRec(new Rectangle(flippedRect.x + Camera.viewPos.X, flippedRect.y + Camera.viewPos.Y, flippedRect.width, flippedRect.height), Color.GOLD); // Draw hitboxes
 
-        DrawTexture(texture, new Vector2(flippedRect.x + textureOffset.X + Camera.viewPos.X, flippedRect.y - textureOffset.Y + Camera.viewPos.Y), scale, lookingRight); // Draw textures
+        if (this is not Tile) DrawTexture(texture, new Vector2(flippedRect.x + textureOffset.X + Camera.viewPos.X, flippedRect.y - textureOffset.Y + Camera.viewPos.Y), scale, lookingRight); // Draw textures
+        else DrawTextureToRect(texture, new Rectangle(flippedRect.x + Camera.viewPos.X, flippedRect.y + Camera.viewPos.Y, flippedRect.width, flippedRect.height));
     }
     public void DrawTexture(Texture2D texture, Vector2 position, float scale, bool lookingRight)
     {
@@ -38,5 +40,12 @@ public class GameObject
     {
         Rectangle flippedRectangle = new Rectangle(rect.x, Raylib.GetScreenHeight() + (rect.y + rect.height) * -1, rect.width, rect.height);
         return flippedRectangle;
+    }
+    private void DrawTextureToRect(Texture2D texture, Rectangle rect)
+    {
+        Vector2 size = new Vector2(texture.width, texture.height);
+        Rectangle sourceRec = new Rectangle(0, 0, size.X, size.Y);
+        Rectangle destRec = new Rectangle(rect.x, rect.y, rect.width, rect.height);
+        Raylib.DrawTexturePro(texture, sourceRec, destRec, new Vector2(0, 0), 0, Color.WHITE);
     }
 }

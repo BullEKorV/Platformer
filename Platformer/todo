@@ -12,6 +12,9 @@ Enemy AI
     Go towards player?
 
 Level maker
+    Place enemies
+    Place collectibles
+    Place player start pos
 
 UI 
     Smarter system

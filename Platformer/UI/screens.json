@@ -35,12 +35,12 @@
         "buttons": [
             {
                 "name": "Resume",
-                "action": "Resume",
+                "action": "Back",
                 "color": "green"
             },
             {
                 "name": "Main Menu",
-                "action": "MainMenu",
+                "action": "Main Menu",
                 "color": "red"
             }
         ]
@@ -49,8 +49,8 @@
         "name": "Level Select",
         "buttons": [
             {
-                "name": "Main Menu",
-                "action": "MainMenu",
+                "name": "Back",
+                "action": "Back",
                 "color": "red",
                 "bottomPlacement": true
             }
@@ -71,8 +71,8 @@
         "name": "Settings",
         "buttons": [
             {
-                "name": "Main Menu",
-                "action": "MainMenu",
+                "name": "Back",
+                "action": "Back",
                 "color": "red"
             }
         ]

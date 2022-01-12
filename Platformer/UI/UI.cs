@@ -1,11 +1,22 @@
 public class UI // IS CALCULATED FROM TOP LEFT
 {
     public static List<Screen> allScreens = new List<Screen>();
+
+    public static Stack<Screen> history = new Stack<Screen>();
     public static Screen currentScreen;
     public UI()
     {
         allScreens = Screen.LoadScreensFromJSON();
         currentScreen = allScreens.Find(x => x.name == "Main Menu");
+    }
+    public static void ChangeToScreen(Screen newScreen)
+    {
+        history.Push(currentScreen);
+        currentScreen = newScreen;
+    }
+    public static void GoBack()
+    {
+        currentScreen = history.Pop();
     }
     public static void Update()
     {

@@ -52,43 +52,43 @@ public class Button // IS CALCULATED FROM TOP LEFT
     }
     public static void NewGame()
     {
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
     }
     public static void Resume()
     {
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
 
     }
     public static void LevelSelect()
     {
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "Level Select");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == "Level Select"));
         Screen.ReloadLevelsToButtons();
     }
     public static void CreateLevel()
     {
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
         Createmode.StartCreatemode();
     }
     public static void Settings()
     {
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "Settings");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == "Settings"));
     }
-    public static void MainMenu()
+    public static void Back()
     {
         LevelManager.ClearLevel();
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "Main Menu");
+        UI.GoBack();
 
         Createmode.EndCreatemode();
     }
     public static void LoadLevel(int level)
     {
         LevelManager.LoadLevel(level);
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
     }
     public static void SelectTile(string tile)
     {
         Createmode.tile = tile;
-        UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
     }
     public static void EndApp()
     {

@@ -11,8 +11,8 @@ public class Screen
     {
         // Console.WriteLine(buttons.Count);
         // open and close pause menu with escapekey
-        if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Pause");
-        else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "Pause") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "") UI.ChangeToScreen(UI.allScreens.Find(x => x.name == "Pause"));
+        else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE) && name == "Pause") UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
 
         foreach (Button butt in buttons) // Update all the button presses etc
             butt.Update();
@@ -79,7 +79,7 @@ public class Screen
 
         for (int i = 0; i < levelSelect.buttons.Count; i++)
         {
-            if (levelSelect.buttons[i].action != Button.MainMenu)
+            if (levelSelect.buttons[i].action != Button.Back)
             {
                 levelSelect.buttons.RemoveAt(i);
                 i--;
@@ -169,7 +169,7 @@ class UIButton
 {
     public string name { get; set; }
     Dictionary<string, Action> allActions = new Dictionary<string, Action> { { "NewGame", Button.NewGame }, {"Resume",Button.Resume}, { "LevelSelect", Button.LevelSelect },
-    { "CreateLevel", Button.CreateLevel }, { "Settings", Button.Settings }, { "MainMenu", Button.MainMenu }, { "EndApp", Button.EndApp } };
+    { "CreateLevel", Button.CreateLevel }, { "Settings", Button.Settings }, { "Back", Button.Back }, { "EndApp", Button.EndApp } };
     public string action
     {
         get

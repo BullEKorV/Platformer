@@ -51,8 +51,6 @@ public class LevelManager
 
         Level newLevel = new Level();
         newLevel.gameobjects = jsonObjects;
-        // newLevel.enemies = enemies;
-        // newLevel.collectibles = collectibles;
         newLevel.level = totalLevels + 1; // Set level name
         newLevel.startPos = startPos;
 

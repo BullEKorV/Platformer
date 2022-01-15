@@ -23,6 +23,9 @@ UI
         Always close active UI when pressing escape
         No manual coding
 
+Button
+    Static på actions?
+
 Known issues// (maybe fix)
 Camera go too slow( character out of scene)
 

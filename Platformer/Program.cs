@@ -4,7 +4,7 @@ global using Raylib_cs;
 class Program
 {
     public static bool windowShouldClose = false;
-    public static float timeScale;
+    public static float timeScale = 1;
     static void Main(string[] args)
     {
         Raylib.InitWindow(1280, 720, "Platformer");
@@ -27,9 +27,11 @@ class Program
                 obj.Update();
 
             // UI button presses etc.
-            UI.currentScreen.Update();
+            // UI.currentScreen.Update();
 
             if (Createmode.isActive) Createmode.Update();
+
+            UI.currentScreen.Update();
 
             // Remove dead enemies
             GameObject.gameObjects.RemoveAll(x =>
@@ -38,13 +40,15 @@ class Program
             });
 
             // Freeze time if not in play mode 
-            if (UI.currentScreen.name == "")
-                timeScale = 1;
-            else
-                timeScale = 0;
+            // if (UI.currentScreen.name == "")
+            //     timeScale = 1;
+            // else
+            //     timeScale = 0;
 
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
+
+            Raylib.DrawText(Raylib.GetFPS().ToString(), 5, 5, 20, Color.WHITE);
 
             foreach (GameObject obj in GameObject.gameObjects)
                 if (!(obj is Player)) obj.Draw(); // Draw all except player

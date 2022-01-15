@@ -1,0 +1,33 @@
+{
+    "name": "Level Select",
+    "layout": {
+        "isHorizontal": true,
+        "layouts": [
+            {},
+            {
+                "isHorizontal": false,
+                "ratio": 2.5,
+                "layouts": [
+                    {
+                        "ratio": 0.7
+                    },
+                    {
+                        "isHorizontal": false,
+                        "ratio": 2,
+                        "loadLevels": true
+                    },
+                    {
+                        "ratio": 0.6,
+                        "buttons": [
+                            {
+                                "name": "Back",
+                                "action": "LastScreen"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {}
+        ]
+    }
+}

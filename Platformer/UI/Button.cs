@@ -1,26 +1,25 @@
-public class Button // IS CALCULATED FROM TOP LEFT
+public class Button
 {
-    public string name;
-    public Action action;
+    public string name { get; set; }
+    private Action Action;
+    public string action { get; set; }
+    public string par { get; set; }
     public Rectangle rect;
-    public Color color = Color.BLUE;
     private bool isMouseOver = false;
     public Texture2D texture;
     public bool drawText = true;
-    public Button(string name, Action action, Rectangle rect, Color color, Texture2D texture)
+    public Button(string name, string action, string par)
     {
         this.name = name;
-        this.action = action;
-        this.rect = rect;
-        this.color = color;
-        this.texture = texture;
+        this.Action = StringToAction(action, par);
+        // this.texture = texture;
     }
     public void Draw()
     {
         // Draw texture and highlight around button
         DrawTexture();
-        if (isMouseOver) DrawHighlight(Color.WHITE);
-        else DrawHighlight(Color.BLACK);
+        // if (isMouseOver) DrawHighlight(Color.WHITE);
+        // else DrawHighlight(Color.BLACK);
 
         // Draw button text
         // Console.WriteLine(action.GetType());
@@ -33,11 +32,13 @@ public class Button // IS CALCULATED FROM TOP LEFT
         else
             isMouseOver = false;
         if (isMouseOver && Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
-            action.Invoke();
+        {
+            Action.Invoke();
+        }
     }
     void DrawTexture() // Later draw texture depending on type of button
     {
-        Raylib.DrawRectangleRec(rect, color);
+        Raylib.DrawRectangleRec(rect, Color.BLUE);
 
         Vector2 size = new Vector2(texture.width, texture.height);
         Rectangle sourceRec = new Rectangle(0, 0, size.X, size.Y);
@@ -50,48 +51,63 @@ public class Button // IS CALCULATED FROM TOP LEFT
         Rectangle lineRect = new Rectangle(rect.x - lineThickness, rect.y - lineThickness, rect.width + lineThickness * 2, rect.height + lineThickness * 2); // Get rectangle outside main so it draws around
         Raylib.DrawRectangleLinesEx(lineRect, lineThickness, color);
     }
+    private Action StringToAction(string stringAction, string par)
+    {
+        switch (stringAction)
+        {
+            case "EndApp":
+                return Button.EndApp;
+            case "OpenScreen":
+                return () => Button.OpenScreen(par);
+            case "LastScreen":
+                return Button.LastScreen;
+            case "LoadLevel":
+                return () => Button.LoadLevel(par);
+
+
+            default:
+                return Button.Empty;
+        }
+    }
     public static void NewGame()
     {
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
+        UI.ChangeToScreen("");
     }
-    public static void Resume()
+    public static void OpenScreen(string screen)
     {
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
-
+        UI.ChangeToScreen(screen);
     }
-    public static void LevelSelect()
+    public static void LastScreen()
     {
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == "Level Select"));
-        Screen.ReloadLevelsToButtons();
+        UI.ChangeToLastScreen();
     }
     public static void CreateLevel()
     {
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
+        UI.ChangeToScreen("");
         Createmode.StartCreatemode();
     }
-    public static void Settings()
-    {
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == "Settings"));
-    }
-    public static void Back()
-    {
-        LevelManager.ClearLevel();
-        UI.GoBack();
+    // public static void Back()
+    // {
+    //     LevelManager.ClearLevel();
+    // UI.GoBack();
 
-        Createmode.EndCreatemode();
-    }
-    public static void LoadLevel(int level)
+    //     Createmode.EndCreatemode();
+    // }
+    public static void LoadLevel(string target)
     {
-        LevelManager.LoadLevel(level);
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
+        LevelManager.LoadLevel(int.Parse(target));
+        UI.ChangeToScreen("");
     }
     public static void SelectTile(string tile)
     {
         Createmode.tile = tile;
-        UI.ChangeToScreen(UI.allScreens.Find(x => x.name == ""));
+        UI.ChangeToScreen("");
     }
     public static void EndApp()
     {
         Program.windowShouldClose = true;
+    }
+    public static void Empty()
+    {
     }
 }

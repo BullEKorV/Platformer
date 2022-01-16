@@ -7,8 +7,8 @@ class Program
     public static float timeScale = 1;
     static void Main(string[] args)
     {
-        Raylib.InitWindow(1280, 720, "Platformer");
-        // Raylib.ToggleFullscreen();
+        Raylib.InitWindow(1920, 1080, "Platformer");
+        Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
         Raylib.SetExitKey(0); // Disable escape to close
 

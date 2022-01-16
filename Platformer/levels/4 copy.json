@@ -1,0 +1,84 @@
+{
+    "level": 4,
+    "startPos": {
+        "x": 0,
+        "y": 0
+    },
+    "gameobjects": [
+        {
+            "type": "grass",
+            "x": -2,
+            "y": -1
+        },
+        {
+            "type": "grass",
+            "x": -1,
+            "y": -1
+        },
+        {
+            "type": "grass",
+            "x": 0,
+            "y": -1
+        },
+        {
+            "type": "grass",
+            "x": 1,
+            "y": -1
+        },
+        {
+            "type": "grass",
+            "x": 2,
+            "y": -1
+        },
+        {
+            "type": "gem",
+            "x": -2,
+            "y": 0
+        },
+        {
+            "type": "gem",
+            "x": -2,
+            "y": 1
+        },
+        {
+            "type": "gem",
+            "x": -2,
+            "y": 2
+        },
+        {
+            "type": "cherry",
+            "x": -1,
+            "y": 2
+        },
+        {
+            "type": "cherry",
+            "x": 0,
+            "y": 3
+        },
+        {
+            "type": "cherry",
+            "x": 1,
+            "y": 3
+        },
+        {
+            "type": "cherry",
+            "x": 2,
+            "y": 3
+        },
+        {
+            "type": "cherry",
+            "x": 2,
+            "y": 2
+        },
+        {
+            "type": "cherry",
+            "x": 3,
+            "y": 2
+        },
+        {
+            "type": "opossum",
+            "x": 2,
+            "y": 0
+        }
+    ]
+}

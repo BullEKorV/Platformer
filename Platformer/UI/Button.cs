@@ -11,6 +11,7 @@ public class Button
     public Button(string name, string action, string par)
     {
         this.name = name;
+        this.action = action;
         this.Action = StringToAction(action, par);
         // this.texture = texture;
     }

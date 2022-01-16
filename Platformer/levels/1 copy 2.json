@@ -1,15 +1,10 @@
 {
-    "level": 10,
+    "level": 1,
     "startPos": {
         "x": 0,
         "y": 0
     },
     "gameobjects": [
-        {
-            "type": "grass",
-            "x": -3,
-            "y": -1
-        },
         {
             "type": "grass",
             "x": -2,
@@ -23,17 +18,17 @@
         {
             "type": "grass",
             "x": 0,
-            "y": -2
+            "y": -1
         },
         {
             "type": "grass",
             "x": 1,
-            "y": -2
+            "y": -1
         },
         {
             "type": "grass",
             "x": 2,
-            "y": -2
+            "y": -1
         },
         {
             "type": "grass",
@@ -41,49 +36,79 @@
             "y": -1
         },
         {
-            "type": "grass",
-            "x": 4,
-            "y": -1
+            "type": "gem",
+            "x": -2,
+            "y": 0
         },
         {
-            "type": "grass",
-            "x": 5,
-            "y": -1
+            "type": "gem",
+            "x": -2,
+            "y": 1
         },
         {
-            "type": "grass",
-            "x": 6,
-            "y": -1
-        },
-        {
-            "type": "grass",
+            "type": "gem",
             "x": -2,
             "y": 2
         },
         {
-            "type": "grass",
-            "x": -3,
+            "type": "cherry",
+            "x": 3,
+            "y": 0
+        },
+        {
+            "type": "cherry",
+            "x": 3,
+            "y": 1
+        },
+        {
+            "type": "cherry",
+            "x": 3,
             "y": 2
         },
         {
             "type": "grass",
-            "x": -4,
+            "x": -1,
+            "y": 0
+        },
+        {
+            "type": "grass",
+            "x": -1,
+            "y": 1
+        },
+        {
+            "type": "grass",
+            "x": -1,
             "y": 2
         },
         {
             "type": "grass",
-            "x": 0,
-            "y": 4
-        },
-        {
-            "type": "grass",
-            "x": 1,
-            "y": 4
+            "x": -1,
+            "y": 3
         },
         {
             "type": "grass",
             "x": 2,
-            "y": 4
+            "y": 3
+        },
+        {
+            "type": "grass",
+            "x": 2,
+            "y": 2
+        },
+        {
+            "type": "grass",
+            "x": 2,
+            "y": 1
+        },
+        {
+            "type": "grass",
+            "x": 2,
+            "y": 0
+        },
+        {
+            "type": "grass",
+            "x": 1,
+            "y": 1
         }
     ]
 }

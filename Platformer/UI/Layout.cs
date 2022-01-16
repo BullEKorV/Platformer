@@ -145,7 +145,7 @@ public class Layout
         const int maxLevelsPerRow = 6;
         int amoutOfLayouts = (int)Math.Ceiling((double)levelNames.Length / maxLevelsPerRow);
 
-        const int margin = 25;
+        float margin = Raylib.GetScreenHeight() / 28;
         float spaceNeeded = (Raylib.GetScreenHeight() / 9 * amoutOfLayouts) + margin * amoutOfLayouts * 2 * 2; // Dont really work... Fix pls
 
         List<Layout> tilesLayouts = new List<Layout>(3);

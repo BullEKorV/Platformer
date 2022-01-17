@@ -16,6 +16,8 @@ public class Camera
         position = new Vector2(SmoothDamp(position.X, targetPos.X, ref velocity.X, 0.03f * GameObject.scale, maxSpeed, Raylib.GetFrameTime()), SmoothDamp(position.Y, targetPos.Y, ref velocity.Y, 0.04f * GameObject.scale, maxSpeed, Raylib.GetFrameTime()));
 
         viewPos = new Vector2(-position.X + Raylib.GetScreenWidth() / 2, position.Y + player.rect.height * 0.75f - Raylib.GetScreenHeight() / 2);
+
+        viewPos = new Vector2((float)Math.Floor(viewPos.X), (float)Math.Floor(viewPos.Y)); // Makes viewpos whole integer to elliminate visual glitch
     }
     public static void MoveToPlayer()
     {

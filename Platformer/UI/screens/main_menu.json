@@ -31,7 +31,8 @@
                             {
                                 "buttons": [
                                     {
-                                        "name": "Create Level"
+                                        "name": "Create Level",
+                                        "action": "NewLevel"
                                     }
                                 ]
                             },

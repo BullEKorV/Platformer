@@ -21,9 +21,14 @@ public class Screen
                     UI.ChangeToScreen("Pause");
             }
             else UI.ChangeToLastScreen();
-
         }
 
+        // Open and close inventory
+        if (Createmode.isActive)
+        {
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) && UI.currentScreen.name == "") UI.ChangeToScreen("Object Select");
+            else if ((Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE))) UI.ChangeToLastScreen();
+        }
     }
     public void Draw()
     {

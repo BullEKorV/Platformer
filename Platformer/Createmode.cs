@@ -21,10 +21,6 @@ public class Createmode
             pos.Y += 2 * Program.timeScale;
         Camera.MoveToCords(pos);
 
-        // Open and close inventory
-        if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) && UI.currentScreen.name == "") UI.currentScreen = UI.allScreens.Find(x => x.name == "Object Select");
-        else if ((Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE)) && UI.currentScreen.name == "Object Select") UI.currentScreen = UI.allScreens.Find(x => x.name == "");
-
         // Only allow placing in resume mode
         if (UI.currentScreen.name != "") allowPlacing = false;
 

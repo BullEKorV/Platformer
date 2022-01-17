@@ -64,7 +64,10 @@ public class Button
                 return Button.LastScreen;
             case "LoadLevel":
                 return () => Button.LoadLevel(par);
-
+            case "ResetLevel":
+                return Button.ResetLevel;
+            case "NewLevel":
+                return Button.NewLevel;
 
             default:
                 return Button.Empty;
@@ -82,21 +85,19 @@ public class Button
     {
         UI.ChangeToLastScreen();
     }
-    public static void CreateLevel()
+    public static void NewLevel()
     {
         UI.ChangeToScreen("");
         Createmode.StartCreatemode();
     }
-    // public static void Back()
-    // {
-    //     LevelManager.ClearLevel();
-    // UI.GoBack();
-
-    //     Createmode.EndCreatemode();
-    // }
     public static void LoadLevel(string target)
     {
-        LevelManager.LoadLevel(int.Parse(target));
+        LevelManager.LoadLevel(target);
+        UI.ChangeToScreen("");
+    }
+    public static void ResetLevel()
+    {
+        LevelManager.ResetLevel();
         UI.ChangeToScreen("");
     }
     public static void SelectTile(string tile)

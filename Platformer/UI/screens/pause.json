@@ -1,0 +1,49 @@
+{
+    "name": "Pause",
+    "layout": {
+        "isHorizontal": true,
+        "layouts": [
+            {},
+            {
+                "isHorizontal": false,
+                "ratio": 2.5,
+                "layouts": [
+                    {
+                        "ratio": 1
+                    },
+                    {
+                        "isHorizontal": false,
+                        "ratio": 2,
+                        "layouts": [
+                            {
+                                "isHorizontal": true,
+                                "buttons": [
+                                    {
+                                        "name": "Resume",
+                                        "action": "LastScreen"
+                                    }
+                                ]
+                            },
+                            {
+                                "ratio": 0.6
+                            },
+                            {
+                                "buttons": [
+                                    {
+                                        "name": "Main Menu",
+                                        "action": "OpenScreen",
+                                        "par": "Main Menu"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "ratio": 0.5
+                    }
+                ]
+            },
+            {}
+        ]
+    }
+}

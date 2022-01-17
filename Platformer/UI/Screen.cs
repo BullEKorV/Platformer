@@ -11,6 +11,19 @@ public class Screen
     public void Update()
     {
         if (layout.layouts != null) layout.Update();
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+        {
+            if (UI.currentScreen.name == "")
+            {
+                if (Createmode.isActive)
+                    UI.ChangeToScreen("PauseCreate");
+                else
+                    UI.ChangeToScreen("Pause");
+            }
+            else UI.ChangeToLastScreen();
+
+        }
+
     }
     public void Draw()
     {

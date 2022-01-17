@@ -142,7 +142,7 @@ public class Layout
     {
         string[] levelNames = Directory.GetFiles(@"levels\").OrderBy(i => i.Substring(4).Remove(0, 7)).ToArray();
 
-        const int maxLevelsPerRow = 6;
+        const int maxLevelsPerRow = 7;
         int amoutOfLayouts = (int)Math.Ceiling((double)levelNames.Length / maxLevelsPerRow);
 
         float margin = Raylib.GetScreenHeight() / 28;
@@ -160,7 +160,7 @@ public class Layout
         {
             tileLayout.layouts.Add(new Layout(new List<Layout>(), new List<Button>(), true));
             tileLayout.layouts[i].buttons = new List<Button>();
-            for (int y = 0; y < Math.Min(levelNames.Length - maxLevelsPerRow * i, 6); y++)
+            for (int y = 0; y < Math.Min(levelNames.Length - maxLevelsPerRow * i, maxLevelsPerRow); y++)
             {
                 tileLayout.layouts[i].buttons.Add(new Button(Path.GetFileNameWithoutExtension(levelNames[y + i * maxLevelsPerRow]), "LoadLevel", Path.GetFileNameWithoutExtension(levelNames[y + i * maxLevelsPerRow])));
             }

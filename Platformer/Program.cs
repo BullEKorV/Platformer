@@ -8,7 +8,7 @@ class Program
     static void Main(string[] args)
     {
         Raylib.InitWindow(1920, 1080, "Platformer");
-        Raylib.ToggleFullscreen();
+        // Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
         Raylib.SetExitKey(0); // Disable escape to close
 
@@ -27,11 +27,9 @@ class Program
                 obj.Update();
 
             // UI button presses etc.
-            // UI.currentScreen.Update();
+            UI.currentScreen.Update();
 
             if (Createmode.isActive) Createmode.Update();
-
-            UI.currentScreen.Update();
 
             // Remove dead enemies
             GameObject.gameObjects.RemoveAll(x =>
@@ -39,11 +37,11 @@ class Program
                 return (x is Entity) ? !((Entity)x).IsAlive() : false;
             });
 
-            // Freeze time if not in play mode 
-            // if (UI.currentScreen.name == "")
-            //     timeScale = 1;
-            // else
-            //     timeScale = 0;
+            // Freeze time if not in play mode
+            if (UI.currentScreen.name == "")
+                timeScale = 1;
+            else
+                timeScale = 0;
 
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);

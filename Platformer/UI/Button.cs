@@ -13,7 +13,7 @@ public class Button
         this.name = name;
         this.action = action;
         this.Action = StringToAction(action, par);
-        // this.texture = texture;
+        // this.texture = Tile.textures["grass"];
     }
     public void Draw()
     {

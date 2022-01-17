@@ -12,10 +12,15 @@ public class UI // IS CALCULATED FROM TOP LEFT
     {
         history.Push(currentScreen);
         currentScreen = UI.allScreens.Find(x => x.name == screen);
+        if (screen == "Main Menu")
+        {
+            history.Clear();
+            LevelManager.ClearLevel();
+        }
     }
     public static void ChangeToLastScreen()
     {
-        currentScreen = history.Pop();
+        if (history.Any()) currentScreen = history.Pop();
     }
     public static void Update()
     {

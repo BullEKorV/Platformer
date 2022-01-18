@@ -116,6 +116,7 @@ public class Player : Entity
         rect.y = pos.Y * scale * 16;
         velocity.Y = 0;
         velocity.X = 0;
+        lookingRight = true;
     }
     public Vector2 GetVelocity()
     {

@@ -9,44 +9,21 @@
                 "ratio": 2.5,
                 "layouts": [
                     {
-                        "ratio": 1
+                        "ratio": 0.7
                     },
                     {
                         "isHorizontal": false,
                         "ratio": 2,
-                        "layouts": [
-                            {
-                                "ratio": 0.92,
-                                "isHorizontal": true,
-                                "buttons": [
-                                    {
-                                        "name": "Resume",
-                                        "action": "LastScreen"
-                                    }
-                                ]
-                            },
-                            {
-                                "ratio": 1.5,
-                                "buttons": [
-                                    {
-                                        "name": "Restart",
-                                        "action": "ResetLevel"
-                                    }
-                                ]
-                            },
-                            {
-                                "buttons": [
-                                    {
-                                        "name": "Main Menu",
-                                        "action": "OpenScreen",
-                                        "par": "Main Menu"
-                                    }
-                                ]
-                            }
-                        ]
+                        "loadTiles": true
                     },
                     {
-                        "ratio": 0.5
+                        "ratio": 0.6,
+                        "buttons": [
+                            {
+                                "name": "Back",
+                                "action": "LastScreen"
+                            }
+                        ]
                     }
                 ]
             },

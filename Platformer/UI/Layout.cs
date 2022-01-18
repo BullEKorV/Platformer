@@ -88,7 +88,7 @@ public class Layout
 
         for (int i = 0; i < buttons.Count; i++)
         {
-            if (buttons[i].action == "LoadLevel") width = height;
+            if (buttons[i].action == "LoadLevel" || buttons[i].action == "SelectTile") width = height;
             buttons[i].rect = new Rectangle(x + area.x, y + area.y, width, height);
 
             if (isHorizontal)
@@ -125,6 +125,9 @@ public class Layout
 
             // Load levels if the time is right >:)
             if (layouts[i].loadLevels) layouts[i].layouts = LoadLevelsToLayout(area.height);
+
+            // Load tiles if the time is right >:)
+            if (layouts[i].loadTiles) layouts[i].layouts = LoadTilesToLayout(area.height);
 
             // Calculate all buttons for this layout if exist
             if (layouts[i].buttons != null)
@@ -167,5 +170,35 @@ public class Layout
         }
         return tilesLayouts;
     }
+    public static List<Layout> LoadTilesToLayout(float layoutHeight) // Make the buttons next to each other, also keep buttons same size // Probably rewrite a lil lol
+    {
+        string[] tileNames = Directory.GetFiles(@"tiles\").OrderBy(i => i.Substring(4).Remove(0, 7)).ToArray();
+        Console.WriteLine("UWU");
+        const int maxTilesPerRow = 7;
+        int amoutOfLayouts = (int)Math.Ceiling((double)tileNames.Length / maxTilesPerRow);
 
+        float margin = Raylib.GetScreenHeight() / 28;
+        float spaceNeeded = (Raylib.GetScreenHeight() / 9 * amoutOfLayouts) + margin * amoutOfLayouts * 2 * 2; // Dont really work... Fix pls
+
+        List<Layout> tilesLayouts = new List<Layout>(3);
+        for (var i = 0; i < 3; i++)
+        {
+            tilesLayouts.Add(new Layout(new List<Layout>(), null, false));
+            if (i == 1) tilesLayouts[i].ratio = spaceNeeded / ((layoutHeight - spaceNeeded) / 2);
+        }
+
+        Layout tileLayout = tilesLayouts[1]; // The tile that needs the levels buttons
+        for (int i = 0; i < amoutOfLayouts; i++)
+        {
+            tileLayout.layouts.Add(new Layout(new List<Layout>(), new List<Button>(), true));
+            tileLayout.layouts[i].buttons = new List<Button>();
+            for (int y = 0; y < Math.Min(tileNames.Length - maxTilesPerRow * i, maxTilesPerRow); y++)
+            {
+                if (Path.GetFileNameWithoutExtension(tileNames[y + i * maxTilesPerRow]) == "selector") continue;
+                tileLayout.layouts[i].buttons.Add(new Button("", "SelectTile", Path.GetFileNameWithoutExtension(tileNames[y + i * maxTilesPerRow])));
+                tileLayout.layouts[i].buttons.Last().texture = Tile.textures[Path.GetFileNameWithoutExtension(tileNames[y + i * maxTilesPerRow])];
+            }
+        }
+        return tilesLayouts;
+    }
 }

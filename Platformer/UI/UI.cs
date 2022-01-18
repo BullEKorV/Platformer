@@ -14,6 +14,7 @@ public class UI // IS CALCULATED FROM TOP LEFT
         currentScreen = UI.allScreens.Find(x => x.name == screen);
         if (screen == "Main Menu")
         {
+            Createmode.EndCreatemode();
             history.Clear();
             LevelManager.ClearLevel();
         }
@@ -32,7 +33,7 @@ public class UI // IS CALCULATED FROM TOP LEFT
 
 
         // Make background darker
-        if (currentScreen.name == "Pause" || currentScreen.name == "Object Select") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 175));
+        if (currentScreen.name == "Pause" || currentScreen.name == "Object Select" || currentScreen.name == "Pause Create") Raylib.DrawRectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight(), new Color(0, 0, 0, 175));
         else if (currentScreen.name != "") Raylib.ClearBackground(Color.SKYBLUE);
 
 

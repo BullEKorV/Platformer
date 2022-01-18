@@ -11,12 +11,15 @@ public class Screen
     public void Update()
     {
         if (layout.layouts != null) layout.Update();
+
+
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE))
         {
             if (UI.currentScreen.name == "")
             {
+                // Console.WriteLine("Uwu");
                 if (Createmode.isActive)
-                    UI.ChangeToScreen("PauseCreate");
+                    UI.ChangeToScreen("Pause Create");
                 else
                     UI.ChangeToScreen("Pause");
             }
@@ -27,7 +30,7 @@ public class Screen
         if (Createmode.isActive)
         {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) && UI.currentScreen.name == "") UI.ChangeToScreen("Object Select");
-            else if ((Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE))) UI.ChangeToLastScreen();
+            else if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) && UI.currentScreen.name == "Object Select") UI.ChangeToLastScreen();
         }
     }
     public void Draw()

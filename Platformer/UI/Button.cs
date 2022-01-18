@@ -7,13 +7,12 @@ public class Button
     public Rectangle rect;
     private bool isMouseOver = false;
     public Texture2D texture;
-    public bool drawText = true;
     public Button(string name, string action, string par)
     {
         this.name = name;
         this.action = action;
         this.Action = StringToAction(action, par);
-        // this.texture = Tile.textures["grass"];
+        this.texture = Tile.textures["grass"];
     }
     public void Draw()
     {
@@ -24,7 +23,7 @@ public class Button
 
         // Draw button text
         // Console.WriteLine(action.GetType());
-        if (drawText) Raylib.DrawText(name, (int)rect.x + (int)rect.width / 2 - Raylib.MeasureText(name, (int)rect.height / 2) / 2, (int)rect.y + Raylib.MeasureText("◯", (int)rect.height / 2), (int)rect.height / 2, Color.WHITE);
+        Raylib.DrawText(name, (int)rect.x + (int)rect.width / 2 - Raylib.MeasureText(name, (int)rect.height / 2) / 2, (int)rect.y + Raylib.MeasureText("◯", (int)rect.height / 2), (int)rect.height / 2, Color.WHITE);
     }
     public void Update()
     {
@@ -63,11 +62,16 @@ public class Button
             case "LastScreen":
                 return Button.LastScreen;
             case "LoadLevel":
-                return () => Button.LoadLevel(par);
+                return () => Button.LoadLevel(int.Parse(par));
             case "ResetLevel":
                 return Button.ResetLevel;
             case "NewLevel":
                 return Button.NewLevel;
+            case "SaveLevel":
+                return Button.SaveLevel;
+            case "SelectTile":
+                return () => Button.SelectTile(par);
+
 
             default:
                 return Button.Empty;
@@ -90,9 +94,14 @@ public class Button
         UI.ChangeToScreen("");
         Createmode.StartCreatemode();
     }
-    public static void LoadLevel(string target)
+    public static void LoadLevel(int target)
     {
         LevelManager.LoadLevel(target);
+        UI.ChangeToScreen("");
+    }
+    public static void SaveLevel()
+    {
+        LevelManager.SaveLevel();
         UI.ChangeToScreen("");
     }
     public static void ResetLevel()

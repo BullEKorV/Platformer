@@ -31,9 +31,6 @@ public class Createmode
             PlaceTile();
         if (Raylib.IsMouseButtonDown(MouseButton.MOUSE_RIGHT_BUTTON) && allowPlacing)
             DeleteTileAtMarker();
-        if (Raylib.IsKeyPressed(KeyboardKey.KEY_F))
-            LevelManager.SaveLevel();
-
     }
     private static void PlaceTile()
     {

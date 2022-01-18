@@ -1,8 +1,8 @@
 public class LevelManager
 {
     public static List<Level> allLevels = new List<Level>();
-    public static string currentLevel;
-    public static void LoadLevel(string level)
+    public static int currentLevel;
+    public static void LoadLevel(int level)
     {
         ClearLevel();
         Level lvl = GetLevelJson(level);
@@ -57,7 +57,7 @@ public class LevelManager
 
         Level newLevel = new Level();
         newLevel.gameobjects = jsonObjects;
-        newLevel.level = (totalLevels + 1).ToString(); // Set level name
+        newLevel.level = (totalLevels + 1); // Set level name
         newLevel.startPos = startPos;
 
         string jsonString = JsonSerializer.Serialize<Level>(newLevel);
@@ -67,7 +67,7 @@ public class LevelManager
 
         File.WriteAllText(filePath, jsonString);
     }
-    static Level GetLevelJson(string lvl)
+    static Level GetLevelJson(int lvl)
     {
         string response = File.ReadAllText(@"levels\" + lvl + ".json"); // Level names start at 1, so therefore -1
 
@@ -79,7 +79,7 @@ public class LevelManager
 
 public class Level
 {
-    public string level { get; set; }
+    public int level { get; set; }
     public StartPos startPos { get; set; }
     public List<JsonGameobject> gameobjects { get; set; }
 }

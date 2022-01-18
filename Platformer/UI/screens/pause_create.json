@@ -1,5 +1,5 @@
 {
-    "name": "Pause",
+    "name": "Pause Create",
     "layout": {
         "isHorizontal": true,
         "layouts": [
@@ -29,8 +29,8 @@
                                 "ratio": 1.7,
                                 "buttons": [
                                     {
-                                        "name": "Restart",
-                                        "action": "ResetLevel"
+                                        "name": "Save",
+                                        "action": "SaveLevel"
                                     }
                                 ]
                             },

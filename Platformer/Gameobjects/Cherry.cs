@@ -20,7 +20,10 @@ public class Cherry : Collectible
     public override void OnCollision()
     {
         Player player = (Player)gameObjects.Find(x => x is (Player));
-        player.hp++;
-        isAlive = false;
+        if (player.hp <= 5)
+        {
+            player.hp++;
+            isAlive = false;
+        }
     }
 }

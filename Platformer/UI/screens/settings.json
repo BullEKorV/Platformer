@@ -16,23 +16,9 @@
                         "ratio": 2,
                         "layouts": [
                             {
-                                "isHorizontal": true,
-                                "buttons": [
-                                    {
-                                        "name": "New Game"
-                                    },
-                                    {
-                                        "name": "Level Select"
-                                    }
-                                ]
+                                "isHorizontal": true
                             },
-                            {
-                                "buttons": [
-                                    {
-                                        "name": "Create Level"
-                                    }
-                                ]
-                            },
+                            {},
                             {
                                 "ratio": 0.6
                             },

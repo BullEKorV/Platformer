@@ -21,7 +21,7 @@ public class Tile : GameObject
         string[] tiles = Directory.GetFiles(root);
         foreach (string tile in tiles)
         {
-            textures.Add(tile.Replace(@"tiles\", "").Replace(@".png", ""), Raylib.LoadTexture(tile));
+            textures.Add(Path.GetFileNameWithoutExtension(tile), Raylib.LoadTexture(tile));
         }
     }
 }

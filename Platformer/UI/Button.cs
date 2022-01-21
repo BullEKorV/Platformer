@@ -18,8 +18,10 @@ public class Button
     {
         // Draw texture and highlight around button
         DrawTexture();
-        // if (isMouseOver) DrawHighlight(Color.WHITE);
-        // else DrawHighlight(Color.BLACK);
+        if (isMouseOver) DrawHighlight(Color.WHITE);
+        else DrawHighlight(new Color(0, 0, 0, 200));
+
+        if (UI.currentScreen.selectedButton != null && UI.currentScreen.selectedButton.name == name) Raylib.DrawRectangleRec(UI.currentScreen.selectedButton.rect, new Color(255, 255, 255, 100));
 
         // Draw button text
         // Console.WriteLine(action.GetType());
@@ -61,8 +63,6 @@ public class Button
                 return () => Button.OpenScreen(par);
             case "LastScreen":
                 return Button.LastScreen;
-            case "LoadLevel":
-                return () => Button.LoadLevel(int.Parse(par));
             case "ResetLevel":
                 return Button.ResetLevel;
             case "NewLevel":
@@ -71,6 +71,14 @@ public class Button
                 return Button.SaveLevel;
             case "SelectTile":
                 return () => Button.SelectTile(par);
+            case "SelectLevel":
+                return () => Button.SelectLevel(par);
+            case "PlayLevel":
+                return Button.PlayLevel;
+            case "EditLevel":
+                return Button.EditLevel;
+            case "DeleteLevel":
+                return Button.DeleteLevel;
 
 
             default:
@@ -94,10 +102,33 @@ public class Button
         UI.ChangeToScreen("");
         Createmode.StartCreatemode();
     }
-    public static void LoadLevel(int target)
+    public static void PlayLevel()
     {
-        LevelManager.LoadLevel(target);
-        UI.ChangeToScreen("");
+        if (UI.currentScreen.selectedButton != null)
+        {
+            LevelManager.LoadLevel(int.Parse(UI.currentScreen.selectedButton.name));
+            UI.currentScreen.selectedButton = null;
+            UI.ChangeToScreen("");
+        }
+    }
+    public static void EditLevel()
+    {
+        if (UI.currentScreen.selectedButton != null)
+        {
+            LevelManager.LoadLevelToEdit(int.Parse(UI.currentScreen.selectedButton.name));
+            UI.currentScreen.selectedButton = null;
+            UI.ChangeToScreen("");
+            Createmode.StartCreatemode();
+        }
+    }
+    public static void DeleteLevel()
+    {
+        if (UI.currentScreen.selectedButton != null)
+        {
+            string root = @"levels\";
+            File.Delete(root + UI.currentScreen.selectedButton.name + ".json");
+            UI.currentScreen.selectedButton = null;
+        }
     }
     public static void SaveLevel()
     {
@@ -114,6 +145,33 @@ public class Button
         Createmode.tile = tile;
         UI.ChangeToScreen("");
     }
+    public static void SelectLevel(string level)
+    {
+        UI.currentScreen.selectedButton = LookForLevelString(UI.currentScreen.layout, level);
+    }
+
+    public static Button LookForLevelString(Layout layout, string s)
+    {
+        Button b = null;
+
+        if (layout.buttons != null)
+        {
+            b = layout.buttons.Find(x => x.name == s);
+        }
+
+        if (b == null)
+        {
+            if (layout.layouts != null)
+                foreach (Layout l in layout.layouts)
+                {
+                    b = LookForLevelString(l, s);
+
+                    if (b != null && b.name == s) return b;
+                }
+        }
+        return b;
+    }
+
     public static void EndApp()
     {
         Program.windowShouldClose = true;

@@ -6,6 +6,8 @@ public class Player : Entity
     float highJumpTimer;
     bool highJumpActive;
     float invulnerabilityTimer;
+    public bool isCrouching = false;
+    public Vector2 crouchStuff;
     public Player() : base()
     {
         speed = 12 * scale;
@@ -18,8 +20,10 @@ public class Player : Entity
 
         Vector2 hitboxSize = new Vector2(15 * scale, 21 * scale); // Define player hitbox
         rect = new Rectangle(24 * scale, 20 * scale, hitboxSize.X, hitboxSize.Y);
+        crouchStuff.Y = rect.height;
 
         textureOffset = new Vector2(-9 * scale, 11 * scale); // Give texture an offset to match with hitbox
+        crouchStuff.X = textureOffset.Y;
     }
     public override void Update()
     {
@@ -48,6 +52,24 @@ public class Player : Entity
             thisFrameX *= 1.6f; // FIX SCALE
         }
         velocity.X += thisFrameX;
+
+        if ((Raylib.IsKeyDown(KeyboardKey.KEY_S) || Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_CONTROL)) && velocity.Y == 0)
+            isCrouching = true;
+        else if (CanStandUp())
+            isCrouching = false;
+
+        if (isCrouching)
+        {
+            velocity.X *= 0.8f;
+            int crouchSize = 5 * scale;
+            rect.height = crouchStuff.Y - crouchSize;
+            textureOffset.Y = crouchStuff.X + crouchSize;
+        }
+        else
+        {
+            rect.height = crouchStuff.Y;
+            textureOffset.Y = crouchStuff.X;
+        }
 
         // Jump logic
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)
@@ -79,8 +101,21 @@ public class Player : Entity
             animation = Animation.allAnimations["player-jump-up"];
         if (velocity.Y < -0)
             animation = Animation.allAnimations["player-jump-down"];
+        if (isCrouching)
+            animation = Animation.allAnimations["player-crouch"];
 
         base.Update(); // 
+    }
+    bool CanStandUp()
+    {
+        Rectangle headCollider = new Rectangle(rect.x, rect.y + rect.height, rect.width, 5);
+        List<Tile> tiles = GameObject.gameObjects.FindAll(x => x is Tile).ConvertAll(x => (Tile)x);
+
+        foreach (Tile tile in tiles)
+        {
+            if (Raylib.CheckCollisionRecs(headCollider, tile.rect)) return false;
+        }
+        return true;
     }
     void CheckEntityCollision(Entity entity)
     {

@@ -43,6 +43,9 @@ public class Createmode
         GameObject existingTile = sameXPos.Find(y => y.rect.y == temp.rect.y);
         if ((existingTile != null && existingTile.id != "player") || existingTile == null)
             new Tile(new Vector2(temp.rect.x / (16 * GameObject.scale), temp.rect.y / (16 * GameObject.scale)), tile);
+
+        GameObject.gameObjects.Remove(temp); // Keep marker above
+        GameObject.gameObjects.Add(temp);
     }
     private static void DeleteAlreadyExistingPlayer()
     {
@@ -60,7 +63,7 @@ public class Createmode
     }
     private static Vector2 ConvertToGrid(Vector2 mousePos, Vector2 cameraPos)
     {
-        Vector2 rectPos = new Vector2(mousePos.X - Raylib.GetScreenWidth() / 2 + pos.X, mousePos.Y - Raylib.GetScreenHeight() / 2 - pos.Y);
+        Vector2 rectPos = new Vector2(mousePos.X - Raylib.GetScreenWidth() / 2 + pos.X, mousePos.Y - Raylib.GetScreenHeight() / 2 - pos.Y + GameObject.scale * 16);
 
         rectPos.X = (int)Math.Floor((rectPos.X) / (16 * GameObject.scale));
         rectPos.X *= (16 * GameObject.scale);
@@ -78,7 +81,7 @@ public class Createmode
         temp = new Tile(new Vector2(), "selector");
         allowPlacing = false;
         tile = "grass";
-        new Tile(new Vector2(0, 0), "player"); // create player automatically
+        if (GameObject.gameObjects.FindAll(x => x.id == "player").Count == 1) new Tile(new Vector2(0, 0), "player"); // create player automatically
     }
     public static void EndCreatemode()
     {

@@ -81,14 +81,14 @@ public class Layout
     {
         const int margin = 25;
 
-        float height = Raylib.GetScreenHeight() / 9;
+        float height = Math.Min(Raylib.GetScreenHeight() / 9, area.height);
         float y = Math.Min(30, (area.height - height) / 2);
         float width = (area.width / buttons.Count) - margin - margin / buttons.Count;
         float x = (area.width / 2) - (width + margin + margin / buttons.Count) / 2 * buttons.Count + margin;
 
         for (int i = 0; i < buttons.Count; i++)
         {
-            if (buttons[i].action == "LoadLevel" || buttons[i].action == "SelectTile") width = height;
+            if (buttons[i].action == "SelectLevel" || buttons[i].action == "SelectTile") width = height;
             buttons[i].rect = new Rectangle(x + area.x, y + area.y, width, height);
 
             if (isHorizontal)
@@ -148,14 +148,16 @@ public class Layout
         const int maxLevelsPerRow = 7;
         int amoutOfLayouts = (int)Math.Ceiling((double)levelNames.Length / maxLevelsPerRow);
 
-        float margin = Raylib.GetScreenHeight() / 28;
-        float spaceNeeded = (Raylib.GetScreenHeight() / 9 * amoutOfLayouts) + margin * amoutOfLayouts * 2 * 2; // Dont really work... Fix pls
+        float margin = 25;
+        float spaceNeeded = Math.Min(2 * ((Raylib.GetScreenHeight() / 9 * amoutOfLayouts) + 2 * (margin * (amoutOfLayouts + 1))), layoutHeight); // Dont really work... Fix pls
 
         List<Layout> tilesLayouts = new List<Layout>(3);
         for (var i = 0; i < 3; i++)
         {
             tilesLayouts.Add(new Layout(new List<Layout>(), null, false));
-            if (i == 1) tilesLayouts[i].ratio = spaceNeeded / ((layoutHeight - spaceNeeded) / 2);
+            // if (i == 1) tilesLayouts[i].ratio = spaceNeeded / ((layoutHeight - spaceNeeded) / 2);
+            if (i == 1) tilesLayouts[i].ratio = spaceNeeded / layoutHeight;
+            else tilesLayouts[i].ratio = ((layoutHeight - spaceNeeded) / 2) / layoutHeight;
         }
 
         Layout tileLayout = tilesLayouts[1]; // The tile that needs the levels buttons
@@ -165,7 +167,7 @@ public class Layout
             tileLayout.layouts[i].buttons = new List<Button>();
             for (int y = 0; y < Math.Min(levelNames.Length - maxLevelsPerRow * i, maxLevelsPerRow); y++)
             {
-                tileLayout.layouts[i].buttons.Add(new Button(Path.GetFileNameWithoutExtension(levelNames[y + i * maxLevelsPerRow]), "LoadLevel", Path.GetFileNameWithoutExtension(levelNames[y + i * maxLevelsPerRow])));
+                tileLayout.layouts[i].buttons.Add(new Button(Path.GetFileNameWithoutExtension(levelNames[y + i * maxLevelsPerRow]), "SelectLevel", Path.GetFileNameWithoutExtension(levelNames[y + i * maxLevelsPerRow])));
             }
         }
         return tilesLayouts;

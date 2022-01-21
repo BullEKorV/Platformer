@@ -2,6 +2,7 @@ public class Screen
 {
     public string name { get; set; }
     public Layout layout { get; set; }
+    public Button selectedButton;
     public Screen(string name, Layout layout)
     {
         this.name = name;
@@ -11,7 +12,6 @@ public class Screen
     public void Update()
     {
         if (layout.layouts != null) layout.Update();
-
 
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE))
         {

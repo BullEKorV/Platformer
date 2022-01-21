@@ -19,7 +19,8 @@
                                 "isHorizontal": true,
                                 "buttons": [
                                     {
-                                        "name": "New Game"
+                                        "name": "New Game",
+                                        "action": "Def"
                                     },
                                     {
                                         "name": "Level Select",

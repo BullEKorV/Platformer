@@ -8,7 +8,7 @@ class Program
     static void Main(string[] args)
     {
         Raylib.InitWindow(1920, 1080, "Platformer");
-        // Raylib.ToggleFullscreen();
+        Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
         Raylib.SetExitKey(0); // Disable escape to close
 
@@ -21,8 +21,6 @@ class Program
 
         while (!Raylib.WindowShouldClose() && !windowShouldClose)
         {
-            if (timeScale > 0) Camera.Update(); // Update camera pos
-
             foreach (GameObject obj in GameObject.gameObjects)
                 obj.Update();
 
@@ -42,6 +40,8 @@ class Program
                 timeScale = 1;
             else
                 timeScale = 0;
+
+            if (timeScale > 0 && !Createmode.isActive) Camera.Update(); // Update camera pos
 
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);

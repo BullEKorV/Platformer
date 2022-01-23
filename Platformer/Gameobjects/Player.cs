@@ -13,7 +13,7 @@ public class Player : Entity
         speed = 12 * scale;
         jumpForce = 96 * scale;
         hp = 3;
-        mass = 1; // Controll gravity
+        mass = 1f; // Controll gravity
         id = "player";
 
         animation = Animation.allAnimations["player-idle"];
@@ -83,7 +83,7 @@ public class Player : Entity
         if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE) || highJumpTimer == 0)
             highJumpActive = false;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive)
-            velocity.Y += 460 * scale * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale; // Perfect for hitting 3 blocks
+            velocity.Y += 460 * scale * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale * mass; // Perfect for hitting 3 blocks
 
         // Check collision with entities
         foreach (GameObject gameObject in gameObjects)
@@ -152,6 +152,8 @@ public class Player : Entity
         velocity.Y = 0;
         velocity.X = 0;
         lookingRight = true;
+        hp = 3;
+        score = 0;
     }
     public Vector2 GetVelocity()
     {

@@ -4,7 +4,7 @@ public class Entity : GameObject
     protected Animation animation;
     protected Vector2 velocity;
     protected int speed;
-    protected int mass;
+    protected float mass;
     protected bool touchingGround;
     protected int currentFrame;
     public Entity() : base()
@@ -19,7 +19,7 @@ public class Entity : GameObject
 
         // Collide with tiles
         foreach (GameObject gameobject in gameObjects)
-            if (gameobject is Tile && mass > 0)
+            if (gameobject is Tile && mass > 0 && ((Tile)gameobject).hasCollision)
                 CheckCollisionTile(gameobject.rect);
 
         // Update velocity

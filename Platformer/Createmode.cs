@@ -9,16 +9,17 @@ public class Createmode
     {
         if (Raylib.IsMouseButtonReleased(MouseButton.MOUSE_LEFT_BUTTON) || Raylib.IsMouseButtonReleased(MouseButton.MOUSE_RIGHT_BUTTON) || Raylib.IsKeyReleased(KeyboardKey.KEY_E) || Raylib.IsKeyReleased(KeyboardKey.KEY_ESCAPE)) allowPlacing = true; // Make sure you dont automatically place blocks
 
-        // Console.WriteLine(GameObject.gameObjects.Count);
+        int shifting = 1;
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT)) shifting = 3;
         // Update pos
         if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
-            pos.X -= 2 * Program.timeScale;
+            pos.X -= 3 * Program.timeScale * shifting;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_D))
-            pos.X += 2 * Program.timeScale;
+            pos.X += 3 * Program.timeScale * shifting;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_S))
-            pos.Y -= 2 * Program.timeScale;
+            pos.Y -= 3 * Program.timeScale * shifting;
         if (Raylib.IsKeyDown(KeyboardKey.KEY_W))
-            pos.Y += 2 * Program.timeScale;
+            pos.Y += 3 * Program.timeScale * shifting;
         Camera.MoveToCords(pos);
 
         // Only allow placing in resume mode

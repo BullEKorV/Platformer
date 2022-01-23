@@ -8,19 +8,22 @@ class Program
     static void Main(string[] args)
     {
         Raylib.InitWindow(1920, 1080, "Platformer");
-        Raylib.ToggleFullscreen();
+        // Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
         Raylib.SetExitKey(0); // Disable escape to close
 
         // Load misc stuff
         Animation.LoadAnimationsFromDirectories();
         Tile.LoadTexturesFromDirectory();
+        Background.Setup();
 
         new UI();
         new Player();
 
         while (!Raylib.WindowShouldClose() && !windowShouldClose)
         {
+            Background.Update();
+
             foreach (GameObject obj in GameObject.gameObjects)
                 obj.Update();
 
@@ -46,10 +49,13 @@ class Program
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.WHITE);
 
+            if ((UI.currentScreen.name == "" || UI.currentScreen.name == "Pause") && !Createmode.isActive) Background.Draw();
+            Background.Draw();
+
             Raylib.DrawText(Raylib.GetFPS().ToString(), 5, 5, 20, Color.WHITE);
 
             foreach (GameObject obj in GameObject.gameObjects)
-                if (!(obj is Player)) obj.Draw(); // Draw all except player
+                if (obj is not Player && (obj.id != "marker" || Createmode.isActive)) obj.Draw(); // Draw all except player and markers
 
             if ((UI.currentScreen.name == "" || UI.currentScreen.name == "Pause") && !Createmode.isActive) GameObject.gameObjects.Find(x => x is Player).Draw(); // Draw player
 

@@ -2,11 +2,14 @@
 public class Tile : GameObject
 {
     public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+    public bool hasCollision = true;
     public Tile(Vector2 gridPos, string name)
     {
         texture = textures[name];
 
         id = name;
+
+        if (id == "marker") hasCollision = false;
 
         Vector2 worldPos = gridPos * 16 * scale;
 

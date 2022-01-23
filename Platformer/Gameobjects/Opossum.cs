@@ -1,8 +1,9 @@
 public class Opossum : Enemy
 {
+    GameObject lastTouched;
     public Opossum(Vector2 pos) : base()
     {
-        speed = 30;
+        speed = 5 * scale;
         mass = 1; // Controll gravity
         id = "opossum";
 
@@ -26,5 +27,26 @@ public class Opossum : Enemy
     public override void Update()
     {
         base.Update();
+
+        if (IsTouchingMarker()) lookingRight = !lookingRight;
+
+        velocity.X += lookingRight == true ? speed * Program.timeScale : -speed * Program.timeScale;
+    }
+    private bool IsTouchingMarker()
+    {
+        List<Tile> markers = new List<Tile>(gameObjects.FindAll(x => x is Tile).Cast<Tile>());
+
+        foreach (Tile marker in markers)
+        {
+            if (marker != lastTouched && Raylib.CheckCollisionRecs(rect, marker.rect))
+            {
+                if (rect.x <= marker.rect.x + 5 && rect.x + rect.width >= marker.rect.x + marker.rect.width - 5)
+                {
+                    lastTouched = marker;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

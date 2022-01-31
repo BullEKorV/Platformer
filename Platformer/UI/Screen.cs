@@ -17,7 +17,6 @@ public class Screen
         {
             if (UI.currentScreen.name == "")
             {
-                // Console.WriteLine("Uwu");
                 if (Createmode.isActive)
                     UI.ChangeToScreen("Pause Create");
                 else

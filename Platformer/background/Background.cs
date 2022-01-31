@@ -8,7 +8,7 @@ public class Background
         {
             backs.Add(new Element(new Vector2(Raylib.GetScreenWidth() * i, 0), Raylib.LoadTexture(@"background\back.png")));
         }
-        for (var i = -1; i < 4; i++)
+        for (var i = 0; i < 5; i++)
         {
             middles.Add(new Element(new Vector2(Raylib.LoadTexture(@"background\middle.png").width * 5f * i, Raylib.GetScreenHeight() * 0.4f), Raylib.LoadTexture(@"background\middle.png")));
         }
@@ -17,29 +17,27 @@ public class Background
     {
         for (var i = 0; i < backs.Count; i++)
         {
-            backs[i].pos.X -= ((Player)GameObject.gameObjects.Find(x => x is Player)).GetVelocity().X / 300 * Program.timeScale;
+            backs[i].pos.X -= ((Player)GameObject.gameObjects.Find(x => x is Player)).GetVelocity().X / 500 * Program.timeScale;
             if (backs[i].pos.X > Raylib.GetScreenWidth()) backs[i].pos.X -= Raylib.GetScreenWidth() * 2;
             else if (backs[i].pos.X < -Raylib.GetScreenWidth()) backs[i].pos.X += Raylib.GetScreenWidth() * 2;
         }
 
-        // for (var i = 0; i < middles.Count; i++)
-        // {
-        //     float lowest = middles.Min(x => x.pos.X);
-        //     float highest = middles.Max(x => x.pos.X);
+        for (var i = 0; i < middles.Count; i++)
+        {
+            float lowest = middles.Min(x => x.pos.X);
+            float highest = middles.Max(x => x.pos.X);
 
-        //     middles[i].pos.X -= ((Player)GameObject.gameObjects.Find(x => x is Player)).GetVelocity().X / 200 * Program.timeScale;
-        //     if (middles[i].pos.X >= middles[i].texture.width * 5f * middles.Count)
-        //     {
-        //         middles[i].pos.X -= lowest - middles[i].texture.width * 4f;
-        //         Console.WriteLine("Right");
-        //     }
+            if (middles[i].pos.X == lowest && middles[i].pos.X + middles[i].texture.width * 5f < -100)
+            {
+                middles[i].pos.X = highest + middles[i].texture.width * 5f;
+            }
+            else if (middles[i].pos.X == highest && middles[i].pos.X > Raylib.GetScreenWidth() + 100)
+            {
+                middles[i].pos.X = lowest - middles[i].texture.width * 5f;
+            }
 
-        //     else if (middles[i].pos.X < -middles[i].texture.width * 5f)
-        //     {
-        //         middles[i].pos.X = highest + middles[i].texture.width * 4f;
-        //         Console.WriteLine("Left");
-        //     }
-        // }
+            middles[i].pos.X -= ((Player)GameObject.gameObjects.Find(x => x is Player)).GetVelocity().X / 200 * Program.timeScale;
+        }
     }
     public static void Draw()
     {

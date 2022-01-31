@@ -57,7 +57,7 @@ public class Layout
     }
     private void DrawLayouts(Layout layout)
     {
-        Raylib.DrawRectangleLinesEx(layout.area, 2, Color.BLACK);
+        // Raylib.DrawRectangleLinesEx(layout.area, 2, Color.BLACK);
 
         // Draw each button in the layout
         if (layout.buttons != null)

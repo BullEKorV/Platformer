@@ -89,7 +89,7 @@ public class LevelManager
     }
     static int FindFirstAvailableName()
     {
-        string[] files = Directory.GetFiles(@"levels\");
+        string[] files = Directory.GetFiles(@"levels\").OrderBy(i => i.Substring(4).Remove(0, 7)).ToArray();
 
         int availableInt = 1;
         for (int i = 0; i < files.Length; i++)

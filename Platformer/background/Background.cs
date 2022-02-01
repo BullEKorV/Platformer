@@ -4,11 +4,11 @@ public class Background
     static List<Element> middles = new List<Element>();
     public static void Setup()
     {
-        for (var i = -1; i < 1; i++)
+        for (var i = 0; i < 2; i++)
         {
             backs.Add(new Element(new Vector2(Raylib.GetScreenWidth() * i, 0), Raylib.LoadTexture(@"background\back.png")));
         }
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 4; i++)
         {
             middles.Add(new Element(new Vector2(Raylib.LoadTexture(@"background\middle.png").width * 5f * i, Raylib.GetScreenHeight() * 0.4f), Raylib.LoadTexture(@"background\middle.png")));
         }
@@ -17,9 +17,10 @@ public class Background
     {
         for (var i = 0; i < backs.Count; i++)
         {
-            backs[i].pos.X -= ((Player)GameObject.gameObjects.Find(x => x is Player)).GetVelocity().X / 500 * Program.timeScale;
             if (backs[i].pos.X > Raylib.GetScreenWidth()) backs[i].pos.X -= Raylib.GetScreenWidth() * 2;
             else if (backs[i].pos.X < -Raylib.GetScreenWidth()) backs[i].pos.X += Raylib.GetScreenWidth() * 2;
+
+            backs[i].pos.X -= Camera.velocity.X / 500 * Program.timeScale;
         }
 
         for (var i = 0; i < middles.Count; i++)
@@ -36,7 +37,9 @@ public class Background
                 middles[i].pos.X = lowest - middles[i].texture.width * 5f;
             }
 
-            middles[i].pos.X -= ((Player)GameObject.gameObjects.Find(x => x is Player)).GetVelocity().X / 200 * Program.timeScale;
+            middles[i].pos.X -= Camera.velocity.X / 200 * Program.timeScale;
+            middles[i].pos.Y = Camera.viewPos.Y * 0.2f + middles[i].texture.width * 3f;
+
         }
     }
     public static void Draw()
@@ -60,7 +63,7 @@ public class Background
 
         Rectangle sourceRec = new Rectangle(0, 0, texture.width, texture.height);
 
-        Rectangle destRec = new Rectangle(position.X, position.Y, size.X, size.Y);
+        Rectangle destRec = new Rectangle((int)position.X, (int)position.Y, size.X, size.Y);
 
         Raylib.DrawTexturePro(texture, sourceRec, destRec, new Vector2(0, 0), 0, Color.WHITE);
     }

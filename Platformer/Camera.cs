@@ -2,7 +2,7 @@ public class Camera
 {
     public static Vector2 viewPos;
     static Vector2 position;
-    static Vector2 velocity;
+    public static Vector2 velocity;
     public static void Update()
     {
         // Get targetpos for camera to move towards with player pos and player velocity. Camera tries to look in front of player

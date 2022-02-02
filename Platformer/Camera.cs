@@ -18,6 +18,32 @@ public class Camera
         viewPos = new Vector2(-position.X + Raylib.GetScreenWidth() / 2, position.Y + player.crouchStuff.X * 1.75f - Raylib.GetScreenHeight() / 2);
 
         viewPos = new Vector2((float)Math.Floor(viewPos.X), (float)Math.Floor(viewPos.Y)); // Makes viewpos whole integer to elliminate visual glitch
+
+        KeepPlayerInScreen(player);
+    }
+    static void KeepPlayerInScreen(Player player)
+    {
+        if (position.Y > player.rect.y + (Raylib.GetScreenHeight() / 4))
+        {
+            viewPos.Y = player.rect.y - (Raylib.GetScreenHeight() / 4) + player.crouchStuff.X * 1.75f;
+            position.Y = viewPos.Y + Raylib.GetScreenHeight() / 2 - player.crouchStuff.X * 1.75f;
+        }
+        if (position.Y < player.rect.y - (Raylib.GetScreenHeight() / 4) - player.crouchStuff.X * 1.75f)
+        {
+            viewPos.Y = player.rect.y - (Raylib.GetScreenHeight() / 4) * 3;
+            position.Y = viewPos.Y + Raylib.GetScreenHeight() / 2 - player.crouchStuff.X * 1.75f;
+        }
+        if (position.X > player.rect.x + (Raylib.GetScreenHeight() / 4) * 3)
+        {
+            viewPos.X = player.rect.x - (Raylib.GetScreenWidth() / 4) * 3;
+            position.X = viewPos.X + (Raylib.GetScreenWidth() / 4) * 3;
+        }
+        if (position.X < player.rect.x - (Raylib.GetScreenWidth() / 4))
+        {
+            viewPos.X = player.rect.x + (Raylib.GetScreenWidth() / 4) * 2;
+            position.X = viewPos.X;
+        }
+
     }
     public static void MoveToPlayer()
     {

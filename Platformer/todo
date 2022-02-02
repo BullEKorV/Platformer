@@ -26,12 +26,6 @@ UI
 Button
     Static på actions?
 
-Known issues// (maybe fix)
-Camera go too slow( character out of scene)
-
-Fix xmovement smooting with scale
-
-Animation framerate is dependent from framerate (slower the fps, slower the animation)
 Really poorly written collision system
     Get's really janky at low fps, starts bumping into stuff etc
 

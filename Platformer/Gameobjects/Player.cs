@@ -8,6 +8,7 @@ public class Player : Entity
     float invulnerabilityTimer;
     public bool isCrouching = false;
     public Vector2 crouchStuff;
+    public Vector2 spawnPoint;
     public Player() : base()
     {
         speed = 12 * scale;
@@ -71,8 +72,14 @@ public class Player : Entity
             textureOffset.Y = crouchStuff.X;
         }
 
+        if (rect.y < LevelManager.deathHeight * 16 * scale)
+        {
+            ResetPos();
+            hp--;
+        }
+
         // Jump logic
-        if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) && touchingGround)
+        if ((Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) || Raylib.IsKeyPressed(KeyboardKey.KEY_W)) && touchingGround)
         {
             highJumpTimer = 0.628f; // Perfect for hitting 3 blocks
             highJumpActive = true;
@@ -80,9 +87,9 @@ public class Player : Entity
             touchingGround = false;
         }
         // High jump logic
-        if (Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE) || highJumpTimer == 0)
+        if ((Raylib.IsKeyReleased(KeyboardKey.KEY_SPACE) || Raylib.IsKeyReleased(KeyboardKey.KEY_W)) || highJumpTimer == 0)
             highJumpActive = false;
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && highJumpActive)
+        if ((Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) || Raylib.IsKeyDown(KeyboardKey.KEY_W)) && highJumpActive)
             velocity.Y += 460 * scale * highJumpTimer * Raylib.GetFrameTime() * Program.timeScale * mass; // Perfect for hitting 3 blocks
 
         // Check collision with entities
@@ -104,7 +111,7 @@ public class Player : Entity
         if (isCrouching)
             animation = Animation.allAnimations["player-crouch"];
 
-        base.Update(); // 
+        base.Update();
     }
     bool CanStandUp()
     {
@@ -145,7 +152,14 @@ public class Player : Entity
             }
         }
     }
-    public void ResetPos(Vector2 pos)
+    private void ResetPos()
+    {
+        rect.x = spawnPoint.X * scale * 16;
+        rect.y = spawnPoint.Y * scale * 16;
+        velocity.Y = 0;
+        velocity.X = 0;
+    }
+    public void Reset(Vector2 pos)
     {
         rect.x = pos.X * scale * 16;
         rect.y = pos.Y * scale * 16;

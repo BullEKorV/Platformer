@@ -1,6 +1,7 @@
 public class LevelManager
 {
     public static int currentLevel;
+    public static int deathHeight;
     public static void LoadLevel(int level)
     {
         ClearLevel();
@@ -10,7 +11,8 @@ public class LevelManager
 
         // Reset player position to start position
         Player player = (Player)GameObject.gameObjects.Find(x => x is Player);
-        player.ResetPos(new Vector2(lvl.startPos.x, lvl.startPos.y));
+        player.Reset(new Vector2(lvl.startPos.x, lvl.startPos.y));
+        player.spawnPoint = new Vector2(lvl.startPos.x, lvl.startPos.y);
         Camera.MoveToPlayer(); // Move camera to player immideately
 
         // Load tiles and enemies to gameobjects
@@ -104,6 +106,8 @@ public class LevelManager
         string response = File.ReadAllText(@"levels\" + lvl + ".json"); // Level names start at 1, so therefore -1
 
         Level level = JsonSerializer.Deserialize<Level>(response);
+
+        deathHeight = level.gameobjects.Min(y => y.y) - 4;
 
         return level;
     }

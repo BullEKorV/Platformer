@@ -8,7 +8,7 @@ class Program
     static void Main(string[] args)
     {
         Raylib.InitWindow(1920, 1080, "Platformer");
-        Raylib.ToggleFullscreen();
+        // Raylib.ToggleFullscreen();
         Raylib.SetTargetFPS(120);
         Raylib.SetExitKey(0); // Disable escape to close
 

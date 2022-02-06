@@ -9,7 +9,7 @@ public class Tile : GameObject
 
         id = name;
 
-        if (id == "marker") hasCollision = false;
+        if (id == "marker" || id == "checkpoint") hasCollision = false;
 
         Vector2 worldPos = gridPos * 16 * scale;
 

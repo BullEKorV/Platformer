@@ -72,11 +72,22 @@ public class Player : Entity
             textureOffset.Y = crouchStuff.X;
         }
 
+        // Reset height if dead
         if (rect.y < LevelManager.deathHeight * 16 * scale)
         {
             ResetPos();
             hp--;
         }
+
+        // Go to main menu if dead
+        if (hp <= 0)
+        {
+            // UI.ChangeToScreen("Main Menu");
+            // LevelManager.ClearLevel();
+        }
+
+        // CHeck if touching checkpoint
+        IsTouchingCheckPoint();
 
         // Jump logic
         if ((Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE) || Raylib.IsKeyPressed(KeyboardKey.KEY_W)) && touchingGround)
@@ -112,6 +123,20 @@ public class Player : Entity
             animation = Animation.allAnimations["player-crouch"];
 
         base.Update();
+    }
+    void IsTouchingCheckPoint()
+    {
+        foreach (GameObject tile in GameObject.gameObjects)
+        {
+            if (tile is Tile)
+            {
+                if (tile.id == "checkpoint")
+                {
+                    if (Raylib.CheckCollisionRecs(rect, tile.rect))
+                        spawnPoint = new Vector2(tile.rect.x / 16 / GameObject.scale, tile.rect.y / 16 / GameObject.scale);
+                }
+            }
+        }
     }
     bool CanStandUp()
     {

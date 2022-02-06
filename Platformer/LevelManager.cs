@@ -107,7 +107,7 @@ public class LevelManager
 
         Level level = JsonSerializer.Deserialize<Level>(response);
 
-        deathHeight = level.gameobjects.Min(y => y.y) - 4;
+        deathHeight = level.gameobjects.Min(y => y.y) - 6;
 
         return level;
     }
